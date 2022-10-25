@@ -13,8 +13,8 @@ steps:
         $CancelScan = $true
         $BaseUrl = 'https://www.netsparkercloud.com' 
         $WebsiteId ='2e1498ff-ad9a-4569-c4e4-ae8301b8e800'
-        $ScanType = 'FullWithPrimaryProfile'
-        $ProfileId = '00000000-0000-0000-0000-000000000000'
+        $ScanType = 'FullWithSelectedProfile'
+        $ProfileId = 'be7bc50f-e79d-4954-7b0a-af0402ac06ea'
         $IntegrationSystem = 'AzureDevOps'
 
         $FalsePositive=$false
