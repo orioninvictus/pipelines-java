@@ -7,6 +7,15 @@ pool:
   vmImage: 'windows-latest'
 
 steps:
+- task: netsparker-cloud@1
+  inputs:
+    apiConnection: 'azuredevopstest'
+    scanTypes: '2'
+    scanWebSites: '2e1498ff-ad9a-4569-c4e4-ae8301b8e800'
+    scanWebSitesProfile: '7b8692de-d855-4d7d-dc24-af2a02ccb87d'
+    buildFail: true
+    severity: 'Critical,High,Medium'
+    stopScan: true
 - powershell: |
 
         #Powershell script starting
