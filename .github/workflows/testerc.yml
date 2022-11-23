@@ -1,7 +1,7 @@
 netspaker_scan_job:
     runs-on: ubuntu-20.04
     steps:
-      # Starts actions with given inputs
+      # Starts actions with given inputs 2
       - name: Start Netsparker Enterprise Scan
         uses: netsparker/Netsparker-Cloud-GitHub-Actions@v0.0.1
         id: netsparker-enterprise-scan-step
