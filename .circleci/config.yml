@@ -5,7 +5,7 @@ workflows:
   example-workflow:
     jobs:
       - netsparker/scan:
-          api_url: api_url
-          scan_type: scan_type
-          scanProfile_id: scanprofile_id
-          website_id: website_id
+          api_url: https://www.netsparkercloud.com
+          scan_type: FullWithSelectedProfile
+          scanProfile_id: 45fc1cc6-512e-428f-01ce-af4d02745c4c
+          website_id: c0680c2e-653c-4a75-48cf-af4903b694a3
