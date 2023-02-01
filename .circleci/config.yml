@@ -1,0 +1,11 @@
+orbs:
+  netsparker: netsparker/scan@1.0.4
+version: 2.1
+workflows:
+  example-workflow:
+    jobs:
+      - netsparker/scan:
+          api_url: api_url
+          scan_type: scan_type
+          scanProfile_id: scanprofile_id
+          website_id: website_id
