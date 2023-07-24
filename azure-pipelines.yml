@@ -25,7 +25,6 @@ steps:
           "LicenseType" = "Subscription"
           "Name" = "http://graphql.testinvicti.com/"
           "Description" = "string"
-          "TechnicalContactEmail" = "ercument.ekim%40netsparker.com"
           "Tags" = @("test", "asml")
       }
       
