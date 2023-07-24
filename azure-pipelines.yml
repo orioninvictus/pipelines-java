@@ -1,4 +1,28 @@
-
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      $Headers = @{
+          'Content-Type' = 'application/json'
+          'Accept' = 'application/json'
+          'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
+      }
+      
+      $Body = @{
+          "DefaultProtocol" = "Http"
+          "AgentMode" = "Internal"
+          "RootUrl" = "http://graphql.testinvicti.com/"
+          "Groups" = @()
+          "LicenseType" = "Subscription"
+          "Name" = "http://graphql.testinvicti.com/"
+          "Description" = "string"
+          "TechnicalContactEmail" = "ercument.ekim%40netsparker.com"
+          "Tags" = @("test", "asml")
+      }
+      
+      $Url = 'https://www.netsparkercloud.com/api/1.0/websites/update'
+      
+      Invoke-RestMethod -Method Post -Uri $Url -Headers $Headers -Body ($Body | ConvertTo-Json)
 trigger:
 
 - master
