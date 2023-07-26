@@ -5,186 +5,186 @@ pool:
   vmImage: 'windows-latest'
 
 steps:
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      $uri = 'https://www.netsparkercloud.com/api/1.0/scanprofiles/update'
-      
-              $headers = @{
-                  'Content-Type'  = 'application/json'
-                  'Accept'        = 'application/json'
-                  'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
-              }
-      
-              $body = @{
-                  "AgentGroupId"                      = None
-                  "AgentId"                           = None
-                  "CreateType"                        = "Website"
-                  "IsPrimary"                         = false
-                  "IsShared"                          = true
-                  "IsTimeWindowEnabled"               = false
-                  "PolicyId"                          = "70313106-f961-44ca-b7cc-af8801d1b5e4"
-                  "ProfileId"                         = "d0155b57-e729-4078-143d-b00301b7af0b"
-                  "ProfileName"                       = "Authentication_profile_update test"
-                  "ReportPolicyId"                    = "013660af-56b7-4176-85be-cf2b84966816"
-                  "TargetUri"                         = "http://aspnet.testsparker.com/"
-                  "UserId"                            = "bdb3e6e4-2e8d-4cd5-3ff8-ae5801fec208"
-                  "AdditionalWebsites"                = @()
-                  "BasicAuthenticationApiModel"       = @{
-                      "Credentials"                   = $null
-                      "IsEnabled"                     = false
-                      "NoChallenge"                   = false
-                  }
-                  "ClientCertificateAuthenticationSetting" = $null
-                  "Cookies"                           = $null
-                  "CrawlAndAttack"                    = true
-                  "EnableHeuristicChecksInCustomUrlRewrite" = true
-                  "ExcludedLinks"                     = @(
-                      {
-                      "RegexPattern"              = "gtm\.js"
-                  },
-              
-                  )
-                  "ExcludedUsageTrackers"             = @()
-                  "DisallowedHttpMethods"             = @()
-                  "ExcludeLinks"                      = {str(scan_details.get('ExcludeLinks', False)).lower()}
-                  "ExcludeAuthenticationPages"        = {str(scan_details.get('ExcludeAuthenticationPages', False)).lower()}
-                  "FindAndFollowNewLinks"             = {str(scan_details.get('FindAndFollowNewLinks', False)).lower()}
-                  "FormAuthenticationSettingModel"    = @{{
-                      "Integrations"                  = @{{}}
-                      "CustomScripts"                 = @()
-                      "InteractiveLoginRequired"      = {str(scan_details['FormAuthenticationSettingModel']['InteractiveLoginRequired']).lower()}
-                      "DefaultPersonaValidation"      = {str(scan_details['FormAuthenticationSettingModel'].get('DefaultPersonaValidation', False)).lower()}
-                      "DetectBearerToken"             = {str(scan_details['FormAuthenticationSettingModel']['DetectBearerToken']).lower()}
-                      "DisableLogoutDetection"        = {str(scan_details['FormAuthenticationSettingModel']['DisableLogoutDetection']).lower()}
-                      "IsEnabled"                     = {str(scan_details['FormAuthenticationSettingModel']['IsEnabled']).lower()}
-                      "IsNotVerified"                 = {str(scan_details['FormAuthenticationSettingModel']['IsNotVerified']).lower()}
-                      "LoginFormUrl"                  = "{scan_details['FormAuthenticationSettingModel']['LoginFormUrl']}"
-                      "LoginRequiredUrl"              = "{scan_details['FormAuthenticationSettingModel']['LoginRequiredUrl']}"
-                      "LogoutKeywordPatterns"         = $null
-                      "LogoutKeywordPatternsValue"    = $null
-                      "LogoutRedirectPattern"         = $null
-                      "OverrideTargetUrl"             = {str(scan_details['FormAuthenticationSettingModel']['OverrideTargetUrl']).lower()}
-                      "Personas"                      = @(
-                          {
-                          "IsActive"                  = true
-                          "Password"                  = "pass34"
-                          "UserName"                  = "test153"
-                          "OtpType"                   = "Totp"
-                          "SecretKey"                 = ""
-                          "Digit"                     = 6
-                          "Period"                    = 30
-                          "Algorithm"                 = "Sha1"
-                          "FormAuthType"              = "Manual"
-                          "IntegrationId"             = "00000000-0000-0000-0000-000000000000"
-                          "Version"                   = "V2"
-                          "SecretEngine"              = $null
-                          "Secret"                    = $null
-                          "UseStaticUsername"         = true
-                          "StaticUsername"            = $null
-                          "UsernameKey"               = $null
-                          "PasswordKey"               = $null
-                          "CyberArkUseStaticUsername" = true
-                          "CyberArkStaticUsername"    = $null
-                          "CyberArkUserNameQuery"     = $null
-                          "CyberArkPasswordQuery"     = $null
-                          "AzureUseStaticUsername"    = true
-                          "AzureStaticUsername"       = $null
-                          "AzureSecret"               = $null
-                          "AzureVaultName"            = $null
-                          "AzureUsernameKey"          = $null
-                          "AzurePasswordKey"          = $null
-                          "OriginalUserName"          = "test153"
-                          "IsReplacedCredentials"     = false
-                          "Index"                     = 0
-                      },
-              
-                  )
-                  "PersonasValidation"            = $null
-                  "AuthorizationTokenRules"       = @()
-              }}
-              "HeaderAuthentication"             = @{{
-                  "Headers"                       = @()
-                  "IsEnabled"                     = {str(scan_details['HeaderAuthentication']['IsEnabled']).lower()}
-              }}
-              "SharkSetting"                      = $null
-              "AuthenticationProfileOption"      = "{scan_details['AuthenticationProfileOption']}"
-              "AuthenticationProfileId"          = $null
-              "ImportedLinks"                    = @()
-              "ImportedFiles"                    = @()
-              "IsMaxScanDurationEnabled"         = {str(scan_details['IsMaxScanDurationEnabled']).lower()}
-              "MaxDynamicSignatures"             = {scan_details['MaxDynamicSignatures']}
-              "MaxScanDuration"                  = {scan_details['MaxScanDuration']}
-              "Scope"                            = "{scan_details['Scope']}"
-              "SubPathMaxDynamicSignatures"      = {scan_details['SubPathMaxDynamicSignatures']}
-              "TimeWindow"                       = @{{
-                  "Items"                        = @(
-                          {
-                          "Day"                  = "Monday"
-                          "From"                 = "09:00"
-                          "ScanningAllowed"      = true
-                          "To"                   = "18:00"
-                      },
-                          {
-                          "Day"                  = "Tuesday"
-                          "From"                 = "09:00"
-                          "ScanningAllowed"      = true
-                          "To"                   = "18:00"
-                      },
-                          {
-                          "Day"                  = "Wednesday"
-                          "From"                 = "09:00"
-                          "ScanningAllowed"      = true
-                          "To"                   = "18:00"
-                      },
-                          {
-                          "Day"                  = "Thursday"
-                          "From"                 = "09:00"
-                          "ScanningAllowed"      = true
-                          "To"                   = "18:00"
-                      },
-                          {
-                          "Day"                  = "Friday"
-                          "From"                 = "09:00"
-                          "ScanningAllowed"      = true
-                          "To"                   = "18:00"
-                      },
-                          {
-                          "Day"                  = "Saturday"
-                          "From"                 = "09:00"
-                          "ScanningAllowed"      = true
-                          "To"                   = "18:00"
-                      },
-                          {
-                          "Day"                  = "Sunday"
-                          "From"                 = "09:00"
-                          "ScanningAllowed"      = true
-                          "To"                   = "18:00"
-                      },
-              
-                  )
-              }}
-              "UrlRewriteAnalyzableExtensions"    = "{scan_details['UrlRewriteAnalyzableExtensions']}"
-              "UrlRewriteBlockSeparators"         = "{scan_details['UrlRewriteBlockSeparators']}"
-              "UrlRewriteMode"                    = "{scan_details['UrlRewriteMode']}"
-              "UrlRewriteRules"                   = @()
-              "PreRequestScriptSetting"           = @{{
-                  "IsEnabled"                     = {str(scan_details['PreRequestScriptSetting']['IsEnabled']).lower()}
-                  "Content"                       = $null
-              }}
-              "DoNotDifferentiateProtocols"       = {str(scan_details['DoNotDifferentiateProtocols']).lower()}
-              "UrlRewriteExcludedLinks"           = @()
-              "OAuth2SettingModel"                = $null
-              "EnablePciScanTask"                 = {str(scan_details['EnablePciScanTask']).lower()}
-              "BusinessLogicRecorderSetting"      = @{{
-                  "SequenceModelList"            = $null
-              }}
-              "Tags"                              = {json.dumps(scan_details['Tags'])}
-              "Comments"                          = $null
-              }}
-      
-              Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body ($body | ConvertTo-Json -Depth 10)
+  - task: PowerShell@2
+    inputs:
+      targetType: 'inline'
+      script: |
+        $uri = 'https://www.netsparkercloud.com/api/1.0/scanprofiles/update'
+        
+                $headers = @{
+                    'Content-Type'  = 'application/json'
+                    'Accept'        = 'application/json'
+                    'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
+                }
+        
+                $body = @{
+                    "AgentGroupId"                      = None
+                    "AgentId"                           = None
+                    "CreateType"                        = "Website"
+                    "IsPrimary"                         = false
+                    "IsShared"                          = true
+                    "IsTimeWindowEnabled"               = false
+                    "PolicyId"                          = "70313106-f961-44ca-b7cc-af8801d1b5e4"
+                    "ProfileId"                         = "d0155b57-e729-4078-143d-b00301b7af0b"
+                    "ProfileName"                       = "Authentication_profile_update test"
+                    "ReportPolicyId"                    = "013660af-56b7-4176-85be-cf2b84966816"
+                    "TargetUri"                         = "http://aspnet.testsparker.com/"
+                    "UserId"                            = "bdb3e6e4-2e8d-4cd5-3ff8-ae5801fec208"
+                    "AdditionalWebsites"                = @()
+                    "BasicAuthenticationApiModel"       = @{
+                        "Credentials"                   = $null
+                        "IsEnabled"                     = false
+                        "NoChallenge"                   = false
+                    }
+                    "ClientCertificateAuthenticationSetting" = $null
+                    "Cookies"                           = $null
+                    "CrawlAndAttack"                    = true
+                    "EnableHeuristicChecksInCustomUrlRewrite" = true
+                    "ExcludedLinks"                     = @(
+                        {
+                        "RegexPattern"              = "gtm\.js"
+                    },
+                
+                    )
+                    "ExcludedUsageTrackers"             = @()
+                    "DisallowedHttpMethods"             = @()
+                    "ExcludeLinks"                      = {str(scan_details.get('ExcludeLinks', False)).lower()}
+                    "ExcludeAuthenticationPages"        = {str(scan_details.get('ExcludeAuthenticationPages', False)).lower()}
+                    "FindAndFollowNewLinks"             = {str(scan_details.get('FindAndFollowNewLinks', False)).lower()}
+                    "FormAuthenticationSettingModel"    = @{{
+                        "Integrations"                  = @{{}}
+                        "CustomScripts"                 = @()
+                        "InteractiveLoginRequired"      = {str(scan_details['FormAuthenticationSettingModel']['InteractiveLoginRequired']).lower()}
+                        "DefaultPersonaValidation"      = {str(scan_details['FormAuthenticationSettingModel'].get('DefaultPersonaValidation', False)).lower()}
+                        "DetectBearerToken"             = {str(scan_details['FormAuthenticationSettingModel']['DetectBearerToken']).lower()}
+                        "DisableLogoutDetection"        = {str(scan_details['FormAuthenticationSettingModel']['DisableLogoutDetection']).lower()}
+                        "IsEnabled"                     = {str(scan_details['FormAuthenticationSettingModel']['IsEnabled']).lower()}
+                        "IsNotVerified"                 = {str(scan_details['FormAuthenticationSettingModel']['IsNotVerified']).lower()}
+                        "LoginFormUrl"                  = "{scan_details['FormAuthenticationSettingModel']['LoginFormUrl']}"
+                        "LoginRequiredUrl"              = "{scan_details['FormAuthenticationSettingModel']['LoginRequiredUrl']}"
+                        "LogoutKeywordPatterns"         = $null
+                        "LogoutKeywordPatternsValue"    = $null
+                        "LogoutRedirectPattern"         = $null
+                        "OverrideTargetUrl"             = {str(scan_details['FormAuthenticationSettingModel']['OverrideTargetUrl']).lower()}
+                        "Personas"                      = @(
+                            {
+                            "IsActive"                  = true
+                            "Password"                  = "pass34"
+                            "UserName"                  = "test153"
+                            "OtpType"                   = "Totp"
+                            "SecretKey"                 = ""
+                            "Digit"                     = 6
+                            "Period"                    = 30
+                            "Algorithm"                 = "Sha1"
+                            "FormAuthType"              = "Manual"
+                            "IntegrationId"             = "00000000-0000-0000-0000-000000000000"
+                            "Version"                   = "V2"
+                            "SecretEngine"              = $null
+                            "Secret"                    = $null
+                            "UseStaticUsername"         = true
+                            "StaticUsername"            = $null
+                            "UsernameKey"               = $null
+                            "PasswordKey"               = $null
+                            "CyberArkUseStaticUsername" = true
+                            "CyberArkStaticUsername"    = $null
+                            "CyberArkUserNameQuery"     = $null
+                            "CyberArkPasswordQuery"     = $null
+                            "AzureUseStaticUsername"    = true
+                            "AzureStaticUsername"       = $null
+                            "AzureSecret"               = $null
+                            "AzureVaultName"            = $null
+                            "AzureUsernameKey"          = $null
+                            "AzurePasswordKey"          = $null
+                            "OriginalUserName"          = "test153"
+                            "IsReplacedCredentials"     = false
+                            "Index"                     = 0
+                        },
+                
+                    )
+                    "PersonasValidation"            = $null
+                    "AuthorizationTokenRules"       = @()
+                }}
+                "HeaderAuthentication"             = @{{
+                    "Headers"                       = @()
+                    "IsEnabled"                     = {str(scan_details['HeaderAuthentication']['IsEnabled']).lower()}
+                }}
+                "SharkSetting"                      = $null
+                "AuthenticationProfileOption"      = "{scan_details['AuthenticationProfileOption']}"
+                "AuthenticationProfileId"          = $null
+                "ImportedLinks"                    = @()
+                "ImportedFiles"                    = @()
+                "IsMaxScanDurationEnabled"         = {str(scan_details['IsMaxScanDurationEnabled']).lower()}
+                "MaxDynamicSignatures"             = {scan_details['MaxDynamicSignatures']}
+                "MaxScanDuration"                  = {scan_details['MaxScanDuration']}
+                "Scope"                            = "{scan_details['Scope']}"
+                "SubPathMaxDynamicSignatures"      = {scan_details['SubPathMaxDynamicSignatures']}
+                "TimeWindow"                       = @{{
+                    "Items"                        = @(
+                            {
+                            "Day"                  = "Monday"
+                            "From"                 = "09:00"
+                            "ScanningAllowed"      = true
+                            "To"                   = "18:00"
+                        },
+                            {
+                            "Day"                  = "Tuesday"
+                            "From"                 = "09:00"
+                            "ScanningAllowed"      = true
+                            "To"                   = "18:00"
+                        },
+                            {
+                            "Day"                  = "Wednesday"
+                            "From"                 = "09:00"
+                            "ScanningAllowed"      = true
+                            "To"                   = "18:00"
+                        },
+                            {
+                            "Day"                  = "Thursday"
+                            "From"                 = "09:00"
+                            "ScanningAllowed"      = true
+                            "To"                   = "18:00"
+                        },
+                            {
+                            "Day"                  = "Friday"
+                            "From"                 = "09:00"
+                            "ScanningAllowed"      = true
+                            "To"                   = "18:00"
+                        },
+                            {
+                            "Day"                  = "Saturday"
+                            "From"                 = "09:00"
+                            "ScanningAllowed"      = true
+                            "To"                   = "18:00"
+                        },
+                            {
+                            "Day"                  = "Sunday"
+                            "From"                 = "09:00"
+                            "ScanningAllowed"      = true
+                            "To"                   = "18:00"
+                        },
+                
+                    )
+                }}
+                "UrlRewriteAnalyzableExtensions"    = "{scan_details['UrlRewriteAnalyzableExtensions']}"
+                "UrlRewriteBlockSeparators"         = "{scan_details['UrlRewriteBlockSeparators']}"
+                "UrlRewriteMode"                    = "{scan_details['UrlRewriteMode']}"
+                "UrlRewriteRules"                   = @()
+                "PreRequestScriptSetting"           = @{{
+                    "IsEnabled"                     = {str(scan_details['PreRequestScriptSetting']['IsEnabled']).lower()}
+                    "Content"                       = $null
+                }}
+                "DoNotDifferentiateProtocols"       = {str(scan_details['DoNotDifferentiateProtocols']).lower()}
+                "UrlRewriteExcludedLinks"           = @()
+                "OAuth2SettingModel"                = $null
+                "EnablePciScanTask"                 = {str(scan_details['EnablePciScanTask']).lower()}
+                "BusinessLogicRecorderSetting"      = @{{
+                    "SequenceModelList"            = $null
+                }}
+                "Tags"                              = {json.dumps(scan_details['Tags'])}
+                "Comments"                          = $null
+                }}
+        
+                Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body ($body | ConvertTo-Json -Depth 10)
 
   - task: netsparker-cloud@1
     inputs:
