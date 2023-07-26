@@ -185,6 +185,7 @@ steps:
               }}
       
               Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body ($body | ConvertTo-Json -Depth 10)
+  
   - task: netsparker-cloud@1
     inputs:
       apiConnection: 'azuredevopstest'
