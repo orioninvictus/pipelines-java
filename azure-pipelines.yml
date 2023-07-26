@@ -14,7 +14,7 @@ steps:
       
 $uri = 'https://www.netsparkercloud.com/api/1.0/scanprofiles/update'
 
-$headers = @{ 
+    $headers = @{ 
     'Content-Type'  = 'application/json'
     'Accept'        = 'application/json'
     'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
