@@ -11,22 +11,21 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      
-$uri = 'https://www.netsparkercloud.com/api/1.0/scanprofiles/update'
+      $uri = 'https://www.netsparkercloud.com/api/1.0/scanprofiles/update'
 
-    $headers = @{ 
+$headers = @{ 
     'Content-Type'  = 'application/json'
     'Accept'        = 'application/json'
     'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
 }
 
 $body = @{
-    "AgentGroupId"                      = None
-    "AgentId"                           = None
+    "AgentGroupId"                      = $null
+    "AgentId"                           = $null
     "CreateType"                        = "Website"
-    "IsPrimary"                         = false
-    "IsShared"                          = true
-    "IsTimeWindowEnabled"               = false
+    "IsPrimary"                         = $false
+    "IsShared"                          = $true
+    "IsTimeWindowEnabled"               = $false
     "PolicyId"                          = "2efccb38-7537-4a76-0006-ae520217285b"
     "ProfileId"                         = "30e839fc-8432-48f7-5e04-afe703378a30"
     "ProfileName"                       = "tron babe 2"
@@ -36,128 +35,126 @@ $body = @{
     "AdditionalWebsites"                = @()
     "BasicAuthenticationApiModel"       = @{
         "Credentials"                   = $null
-        "IsEnabled"                     = false
-        "NoChallenge"                   = false
+        "IsEnabled"                     = $false
+        "NoChallenge"                   = $false
     }
     "ClientCertificateAuthenticationSetting" = $null
     "Cookies"                           = $null
-    "CrawlAndAttack"                    = true
-    "EnableHeuristicChecksInCustomUrlRewrite" = true
+    "CrawlAndAttack"                    = $true
+    "EnableHeuristicChecksInCustomUrlRewrite" = $true
     "ExcludedLinks"                     = @(
-        {
+        @{
             "RegexPattern"              = "gtm\.js"
         },
-        {
+        @{
             "RegexPattern"              = "WebResource\.axd"
         },
-        {
+        @{
             "RegexPattern"              = "ScriptResource\.axd"
-        },
-
+        }
     )
     "ExcludedUsageTrackers"             = @()
     "DisallowedHttpMethods"             = @()
-    "ExcludeLinks"                      = {str(scan_details['ExcludeLinks']).lower()}
-    "ExcludeAuthenticationPages"        = {str(scan_details['ExcludeAuthenticationPages']).lower()}
-    "FindAndFollowNewLinks"             = {str(scan_details['FindAndFollowNewLinks']).lower()}
-    "FormAuthenticationSettingModel"    = @{{
-        "Integrations"                  = @{{}}
+    "ExcludeLinks"                      = $false
+    "ExcludeAuthenticationPages"        = $false
+    "FindAndFollowNewLinks"             = $false
+    "FormAuthenticationSettingModel"    = @{
+        "Integrations"                  = @{}
         "CustomScripts"                 = @()
-        "InteractiveLoginRequired"      = {str(scan_details['FormAuthenticationSettingModel']['InteractiveLoginRequired']).lower()}
+        "InteractiveLoginRequired"      = $false
         "DefaultPersonaValidation"      = $null
-        "DetectBearerToken"             = {str(scan_details['FormAuthenticationSettingModel']['DetectBearerToken']).lower()}
-        "DisableLogoutDetection"        = {str(scan_details['FormAuthenticationSettingModel']['DisableLogoutDetection']).lower()}
-        "IsEnabled"                     = {str(scan_details['FormAuthenticationSettingModel']['IsEnabled']).lower()}
-        "IsNotVerified"                 = {str(scan_details['FormAuthenticationSettingModel']['IsNotVerified']).lower()}
+        "DetectBearerToken"             = $true
+        "DisableLogoutDetection"        = $false
+        "IsEnabled"                     = $false
+        "IsNotVerified"                 = $false
         "LoginFormUrl"                  = $null
         "LoginRequiredUrl"              = $null
         "LogoutKeywordPatterns"         = $null
         "LogoutKeywordPatternsValue"    = $null
         "LogoutRedirectPattern"         = $null
-        "OverrideTargetUrl"             = {str(scan_details['FormAuthenticationSettingModel']['OverrideTargetUrl']).lower()}
+        "OverrideTargetUrl"             = $false
         "Personas"                      = @()
         "PersonasValidation"            = $null
         "AuthorizationTokenRules"       = @()
-    }}
-    "HeaderAuthentication"             = @{{
+    }
+    "HeaderAuthentication"             = @{
         "Headers"                       = @()
-        "IsEnabled"                     = {str(scan_details['HeaderAuthentication']['IsEnabled']).lower()}
-    }}
+        "IsEnabled"                     = $false
+    }
     "SharkSetting"                      = $null
-    "AuthenticationProfileOption"      = "{scan_details['AuthenticationProfileOption']}"
+    "AuthenticationProfileOption"      = "UseMatchedProfile"
     "AuthenticationProfileId"          = $null
     "ImportedLinks"                    = @()
     "ImportedFiles"                    = @()
-    "IsMaxScanDurationEnabled"         = {str(scan_details['IsMaxScanDurationEnabled']).lower()}
-    "MaxDynamicSignatures"             = {scan_details['MaxDynamicSignatures']}
-    "MaxScanDuration"                  = {scan_details['MaxScanDuration']}
-    "Scope"                            = "{scan_details['Scope']}"
-    "SubPathMaxDynamicSignatures"      = {scan_details['SubPathMaxDynamicSignatures']}
-    "TimeWindow"                       = @{{
+    "IsMaxScanDurationEnabled"         = $false
+    "MaxDynamicSignatures"             = 60
+    "MaxScanDuration"                  = 48
+    "Scope"                            = "EnteredPathAndBelow"
+    "SubPathMaxDynamicSignatures"      = 30
+    "TimeWindow"                       = @{
         "Items"                        = @(
-            {
+            @{
                 "Day"                  = "Monday"
                 "From"                 = "09:00"
-                "ScanningAllowed"      = true
+                "ScanningAllowed"      = $true
                 "To"                   = "18:00"
             },
-            {
+            @{
                 "Day"                  = "Tuesday"
                 "From"                 = "09:00"
-                "ScanningAllowed"      = true
+                "ScanningAllowed"      = $true
                 "To"                   = "18:00"
             },
-            {
+            @{
                 "Day"                  = "Wednesday"
                 "From"                 = "09:00"
-                "ScanningAllowed"      = true
+                "ScanningAllowed"      = $true
                 "To"                   = "18:00"
             },
-            {
+            @{
                 "Day"                  = "Thursday"
                 "From"                 = "09:00"
-                "ScanningAllowed"      = true
+                "ScanningAllowed"      = $true
                 "To"                   = "18:00"
             },
-            {
+            @{
                 "Day"                  = "Friday"
                 "From"                 = "09:00"
-                "ScanningAllowed"      = true
+                "ScanningAllowed"      = $true
                 "To"                   = "18:00"
             },
-            {
+            @{
                 "Day"                  = "Saturday"
                 "From"                 = "09:00"
-                "ScanningAllowed"      = true
+                "ScanningAllowed"      = $true
                 "To"                   = "18:00"
             },
-            {
+            @{
                 "Day"                  = "Sunday"
                 "From"                 = "09:00"
-                "ScanningAllowed"      = true
+                "ScanningAllowed"      = $true
                 "To"                   = "18:00"
-            },
-
+            }
         )
-    }}
-    "UrlRewriteAnalyzableExtensions"    = "{scan_details['UrlRewriteAnalyzableExtensions']}"
-    "UrlRewriteBlockSeparators"         = "{scan_details['UrlRewriteBlockSeparators']}"
-    "UrlRewriteMode"                    = "{scan_details['UrlRewriteMode']}"
+    }
+    "UrlRewriteAnalyzableExtensions"    = "htm,html"
+    "UrlRewriteBlockSeparators"         = "/$.,;|:"
+    "UrlRewriteMode"                    = "Heuristic"
     "UrlRewriteRules"                   = @()
-    "PreRequestScriptSetting"           = @{{
-        "IsEnabled"                     = {str(scan_details['PreRequestScriptSetting']['IsEnabled']).lower()}
+    "PreRequestScriptSetting"           = @{
+        "IsEnabled"                     = $false
         "Content"                       = $null
-    }}
-    "DoNotDifferentiateProtocols"       = {str(scan_details['DoNotDifferentiateProtocols']).lower()}
+    }
+    "DoNotDifferentiateProtocols"       = $true
     "UrlRewriteExcludedLinks"           = @()
     "OAuth2SettingModel"                = $null
-    "EnablePciScanTask"                 = {str(scan_details['EnablePciScanTask']).lower()}
-    "BusinessLogicRecorderSetting"      = @{{
+    "EnablePciScanTask"                 = $false
+    "BusinessLogicRecorderSetting"      = @{
         "SequenceModelList"            = $null
-    }}
-    "Tags"                              = {json.dumps(scan_details['Tags'])}
-    "Comments"                          = test purpose
-}}
+    }
+    "Tags"                              = @("torr", "mann")
+    "Comments"                          = $null
+}
 
 Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body ($body | ConvertTo-Json -Depth 10)
 
