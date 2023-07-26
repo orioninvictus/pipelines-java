@@ -51,7 +51,7 @@ steps:
             "ExcludeLinks"                      = {str(scan_details.get('ExcludeLinks', False)).lower()}
             "ExcludeAuthenticationPages"        = {str(scan_details.get('ExcludeAuthenticationPages', False)).lower()}
             "FindAndFollowNewLinks"             = {str(scan_details.get('FindAndFollowNewLinks', False)).lower()}
-            "FormAuthenticationSettingModel"    = @{{
+            "FormAuthenticationSettingModel"    = @{{,
                 "Integrations"                  = @{{}}
                 "CustomScripts"                 = @()
                 "InteractiveLoginRequired"      = {str(scan_details['FormAuthenticationSettingModel']['InteractiveLoginRequired']).lower()}
