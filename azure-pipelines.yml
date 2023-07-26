@@ -69,8 +69,8 @@ steps:
                         "Personas"                      = @(
                             {
                             "IsActive"                  = true
-                            "Password"                  = "pass34"
-                            "UserName"                  = "test153123123"
+                            "Password"                  = "pass34dasdasdas"
+                            "UserName"                  = "test153dadsadas"
                             "OtpType"                   = "Totp"
                             "SecretKey"                 = ""
                             "Digit"                     = 6
