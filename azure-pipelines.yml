@@ -151,7 +151,7 @@ steps:
               "SequenceModelList"            = $null
           }
           "Tags"                              = @("torr", "mann", "testpurpose")
-          "Comments"                          = test purposes maaan
+          "Comments"                          = $null
         }
 
         Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body ($body | ConvertTo-Json -Depth 10)
