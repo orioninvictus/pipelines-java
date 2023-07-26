@@ -73,7 +73,7 @@ steps:
                     @{
                         "IsActive"                  = $true
                         "Password"                  = "pass34"
-                        "UserName"                  = "test153"
+                        "UserName"                  = "Rares"
                         "OtpType"                   = "Totp"
                         "SecretKey"                 = ""
                         "Digit"                     = 6
