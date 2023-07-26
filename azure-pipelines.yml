@@ -150,7 +150,7 @@ steps:
           "BusinessLogicRecorderSetting"      = @{
               "SequenceModelList"            = $null
           }
-          "Tags"                              = @("torr", "mann")
+          "Tags"                              = @("torr", "mann", "testpurpose")
           "Comments"                          = test purposes maaan
         }
 
