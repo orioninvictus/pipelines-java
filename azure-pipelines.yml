@@ -54,18 +54,18 @@ steps:
             "FormAuthenticationSettingModel"    = @{{  # Missing comma here
                 "Integrations"                  = @{{}}
                 "CustomScripts"                 = @()
-                "InteractiveLoginRequired"      = {"$true" if scan_details['FormAuthenticationSettingModel']['InteractiveLoginRequired'] else "$false"}
-                "DefaultPersonaValidation"      = {"$true" if scan_details['FormAuthenticationSettingModel'].get('DefaultPersonaValidation', False) else "$false"}
-                "DetectBearerToken"             = {"$true" if scan_details['FormAuthenticationSettingModel']['DetectBearerToken'] else "$false"}
-                "DisableLogoutDetection"        = {"$true" if scan_details['FormAuthenticationSettingModel']['DisableLogoutDetection'] else "$false"}
-                "IsEnabled"                     = {"$true" if scan_details['FormAuthenticationSettingModel']['IsEnabled'] else "$false"}
-                "IsNotVerified"                 = {"$true" if scan_details['FormAuthenticationSettingModel']['IsNotVerified'] else "$false"}
+                "InteractiveLoginRequired"      = "{str(scan_details['FormAuthenticationSettingModel']['InteractiveLoginRequired']).lower()}"
+                "DefaultPersonaValidation"      = "{str(scan_details['FormAuthenticationSettingModel'].get('DefaultPersonaValidation', False)).lower()}"
+                "DetectBearerToken"             = "{str(scan_details['FormAuthenticationSettingModel']['DetectBearerToken']).lower()}"
+                "DisableLogoutDetection"        = "{str(scan_details['FormAuthenticationSettingModel']['DisableLogoutDetection']).lower()}"
+                "IsEnabled"                     = "{str(scan_details['FormAuthenticationSettingModel']['IsEnabled']).lower()}"
+                "IsNotVerified"                 = "{str(scan_details['FormAuthenticationSettingModel']['IsNotVerified']).lower()}"
                 "LoginFormUrl"                  = "{scan_details['FormAuthenticationSettingModel']['LoginFormUrl']}"
                 "LoginRequiredUrl"              = "{scan_details['FormAuthenticationSettingModel']['LoginRequiredUrl']}"
                 "LogoutKeywordPatterns"         = $null
                 "LogoutKeywordPatternsValue"    = $null
                 "LogoutRedirectPattern"         = $null
-                "OverrideTargetUrl"             = {"$true" if scan_details['FormAuthenticationSettingModel']['OverrideTargetUrl'] else "$false"}
+                "OverrideTargetUrl"             = "{str(scan_details['FormAuthenticationSettingModel']['OverrideTargetUrl']).lower()}"
                 "Personas"                      = @(
                 {
                     "IsActive"                  = true
