@@ -1,169 +1,167 @@
 trigger:
-
-- master
+  - master
 
 pool:
   vmImage: 'windows-latest'
 
 steps:
+  - task: PowerShell@2
+    inputs:
+      targetType: 'inline'
+      script: |
+        $uri = 'https://www.netsparkercloud.com/api/1.0/scanprofiles/update'
 
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      $uri = 'https://www.netsparkercloud.com/api/1.0/scanprofiles/update'
-
-$headers = @{ 
-    'Content-Type'  = 'application/json'
-    'Accept'        = 'application/json'
-    'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
-}
-
-$body = @{
-    "AgentGroupId"                      = $null
-    "AgentId"                           = $null
-    "CreateType"                        = "Website"
-    "IsPrimary"                         = $false
-    "IsShared"                          = $true
-    "IsTimeWindowEnabled"               = $false
-    "PolicyId"                          = "2efccb38-7537-4a76-0006-ae520217285b"
-    "ProfileId"                         = "30e839fc-8432-48f7-5e04-afe703378a30"
-    "ProfileName"                       = "tron babe 2"
-    "ReportPolicyId"                    = "c96bd18b-0936-489e-5125-af2a02cbd573"
-    "TargetUri"                         = "http://testaspnet.vulnweb.com/"
-    "UserId"                            = "bdb3e6e4-2e8d-4cd5-3ff8-ae5801fec208"
-    "AdditionalWebsites"                = @()
-    "BasicAuthenticationApiModel"       = @{
-        "Credentials"                   = $null
-        "IsEnabled"                     = $false
-        "NoChallenge"                   = $false
-    }
-    "ClientCertificateAuthenticationSetting" = $null
-    "Cookies"                           = $null
-    "CrawlAndAttack"                    = $true
-    "EnableHeuristicChecksInCustomUrlRewrite" = $true
-    "ExcludedLinks"                     = @(
-        @{
-            "RegexPattern"              = "gtm\.js"
-        },
-        @{
-            "RegexPattern"              = "WebResource\.axd"
-        },
-        @{
-            "RegexPattern"              = "ScriptResource\.axd"
+        $headers = @{ 
+          'Content-Type'  = 'application/json'
+          'Accept'        = 'application/json'
+          'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
         }
-    )
-    "ExcludedUsageTrackers"             = @()
-    "DisallowedHttpMethods"             = @()
-    "ExcludeLinks"                      = $false
-    "ExcludeAuthenticationPages"        = $false
-    "FindAndFollowNewLinks"             = $false
-    "FormAuthenticationSettingModel"    = @{
-        "Integrations"                  = @{}
-        "CustomScripts"                 = @()
-        "InteractiveLoginRequired"      = $false
-        "DefaultPersonaValidation"      = $null
-        "DetectBearerToken"             = $true
-        "DisableLogoutDetection"        = $false
-        "IsEnabled"                     = $false
-        "IsNotVerified"                 = $false
-        "LoginFormUrl"                  = $null
-        "LoginRequiredUrl"              = $null
-        "LogoutKeywordPatterns"         = $null
-        "LogoutKeywordPatternsValue"    = $null
-        "LogoutRedirectPattern"         = $null
-        "OverrideTargetUrl"             = $false
-        "Personas"                      = @()
-        "PersonasValidation"            = $null
-        "AuthorizationTokenRules"       = @()
-    }
-    "HeaderAuthentication"             = @{
-        "Headers"                       = @()
-        "IsEnabled"                     = $false
-    }
-    "SharkSetting"                      = $null
-    "AuthenticationProfileOption"      = "UseMatchedProfile"
-    "AuthenticationProfileId"          = $null
-    "ImportedLinks"                    = @()
-    "ImportedFiles"                    = @()
-    "IsMaxScanDurationEnabled"         = $false
-    "MaxDynamicSignatures"             = 60
-    "MaxScanDuration"                  = 48
-    "Scope"                            = "EnteredPathAndBelow"
-    "SubPathMaxDynamicSignatures"      = 30
-    "TimeWindow"                       = @{
-        "Items"                        = @(
-            @{
-                "Day"                  = "Monday"
-                "From"                 = "09:00"
-                "ScanningAllowed"      = $true
-                "To"                   = "18:00"
-            },
-            @{
-                "Day"                  = "Tuesday"
-                "From"                 = "09:00"
-                "ScanningAllowed"      = $true
-                "To"                   = "18:00"
-            },
-            @{
-                "Day"                  = "Wednesday"
-                "From"                 = "09:00"
-                "ScanningAllowed"      = $true
-                "To"                   = "18:00"
-            },
-            @{
-                "Day"                  = "Thursday"
-                "From"                 = "09:00"
-                "ScanningAllowed"      = $true
-                "To"                   = "18:00"
-            },
-            @{
-                "Day"                  = "Friday"
-                "From"                 = "09:00"
-                "ScanningAllowed"      = $true
-                "To"                   = "18:00"
-            },
-            @{
-                "Day"                  = "Saturday"
-                "From"                 = "09:00"
-                "ScanningAllowed"      = $true
-                "To"                   = "18:00"
-            },
-            @{
-                "Day"                  = "Sunday"
-                "From"                 = "09:00"
-                "ScanningAllowed"      = $true
-                "To"                   = "18:00"
-            }
-        )
-    }
-    "UrlRewriteAnalyzableExtensions"    = "htm,html"
-    "UrlRewriteBlockSeparators"         = "/$.,;|:"
-    "UrlRewriteMode"                    = "Heuristic"
-    "UrlRewriteRules"                   = @()
-    "PreRequestScriptSetting"           = @{
-        "IsEnabled"                     = $false
-        "Content"                       = $null
-    }
-    "DoNotDifferentiateProtocols"       = $true
-    "UrlRewriteExcludedLinks"           = @()
-    "OAuth2SettingModel"                = $null
-    "EnablePciScanTask"                 = $false
-    "BusinessLogicRecorderSetting"      = @{
-        "SequenceModelList"            = $null
-    }
-    "Tags"                              = @("torr", "mann")
-    "Comments"                          = $null
-}
 
-Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body ($body | ConvertTo-Json -Depth 10)
+        $body = @{
+          "AgentGroupId"                      = $null
+          "AgentId"                           = $null
+          "CreateType"                        = "Website"
+          "IsPrimary"                         = $false
+          "IsShared"                          = $true
+          "IsTimeWindowEnabled"               = $false
+          "PolicyId"                          = "2efccb38-7537-4a76-0006-ae520217285b"
+          "ProfileId"                         = "30e839fc-8432-48f7-5e04-afe703378a30"
+          "ProfileName"                       = "tron babe 2"
+          "ReportPolicyId"                    = "c96bd18b-0936-489e-5125-af2a02cbd573"
+          "TargetUri"                         = "http://testaspnet.vulnweb.com/"
+          "UserId"                            = "bdb3e6e4-2e8d-4cd5-3ff8-ae5801fec208"
+          "AdditionalWebsites"                = @()
+          "BasicAuthenticationApiModel"       = @{
+              "Credentials"                   = $null
+              "IsEnabled"                     = $false
+              "NoChallenge"                   = $false
+          }
+          "ClientCertificateAuthenticationSetting" = $null
+          "Cookies"                           = $null
+          "CrawlAndAttack"                    = $true
+          "EnableHeuristicChecksInCustomUrlRewrite" = $true
+          "ExcludedLinks"                     = @(
+              @{
+                  "RegexPattern"              = "gtm\.js"
+              },
+              @{
+                  "RegexPattern"              = "WebResource\.axd"
+              },
+              @{
+                  "RegexPattern"              = "ScriptResource\.axd"
+              }
+          )
+          "ExcludedUsageTrackers"             = @()
+          "DisallowedHttpMethods"             = @()
+          "ExcludeLinks"                      = $false
+          "ExcludeAuthenticationPages"        = $false
+          "FindAndFollowNewLinks"             = $false
+          "FormAuthenticationSettingModel"    = @{
+              "Integrations"                  = @{}
+              "CustomScripts"                 = @()
+              "InteractiveLoginRequired"      = $false
+              "DefaultPersonaValidation"      = $null
+              "DetectBearerToken"             = $true
+              "DisableLogoutDetection"        = $false
+              "IsEnabled"                     = $false
+              "IsNotVerified"                 = $false
+              "LoginFormUrl"                  = $null
+              "LoginRequiredUrl"              = $null
+              "LogoutKeywordPatterns"         = $null
+              "LogoutKeywordPatternsValue"    = $null
+              "LogoutRedirectPattern"         = $null
+              "OverrideTargetUrl"             = $false
+              "Personas"                      = @()
+              "PersonasValidation"            = $null
+              "AuthorizationTokenRules"       = @()
+          }
+          "HeaderAuthentication"             = @{
+              "Headers"                       = @()
+              "IsEnabled"                     = $false
+          }
+          "SharkSetting"                      = $null
+          "AuthenticationProfileOption"      = "UseMatchedProfile"
+          "AuthenticationProfileId"          = $null
+          "ImportedLinks"                    = @()
+          "ImportedFiles"                    = @()
+          "IsMaxScanDurationEnabled"         = $false
+          "MaxDynamicSignatures"             = 60
+          "MaxScanDuration"                  = 48
+          "Scope"                            = "EnteredPathAndBelow"
+          "SubPathMaxDynamicSignatures"      = 30
+          "TimeWindow"                       = @{
+              "Items"                        = @(
+                  @{
+                      "Day"                  = "Monday"
+                      "From"                 = "09:00"
+                      "ScanningAllowed"      = $true
+                      "To"                   = "18:00"
+                  },
+                  @{
+                      "Day"                  = "Tuesday"
+                      "From"                 = "09:00"
+                      "ScanningAllowed"      = $true
+                      "To"                   = "18:00"
+                  },
+                  @{
+                      "Day"                  = "Wednesday"
+                      "From"                 = "09:00"
+                      "ScanningAllowed"      = $true
+                      "To"                   = "18:00"
+                  },
+                  @{
+                      "Day"                  = "Thursday"
+                      "From"                 = "09:00"
+                      "ScanningAllowed"      = $true
+                      "To"                   = "18:00"
+                  },
+                  @{
+                      "Day"                  = "Friday"
+                      "From"                 = "09:00"
+                      "ScanningAllowed"      = $true
+                      "To"                   = "18:00"
+                  },
+                  @{
+                      "Day"                  = "Saturday"
+                      "From"                 = "09:00"
+                      "ScanningAllowed"      = $true
+                      "To"                   = "18:00"
+                  },
+                  @{
+                      "Day"                  = "Sunday"
+                      "From"                 = "09:00"
+                      "ScanningAllowed"      = $true
+                      "To"                   = "18:00"
+                  }
+              )
+          }
+          "UrlRewriteAnalyzableExtensions"    = "htm,html"
+          "UrlRewriteBlockSeparators"         = "/$.,;|:"
+          "UrlRewriteMode"                    = "Heuristic"
+          "UrlRewriteRules"                   = @()
+          "PreRequestScriptSetting"           = @{
+              "IsEnabled"                     = $false
+              "Content"                       = $null
+          }
+          "DoNotDifferentiateProtocols"       = $true
+          "UrlRewriteExcludedLinks"           = @()
+          "OAuth2SettingModel"                = $null
+          "EnablePciScanTask"                 = $false
+          "BusinessLogicRecorderSetting"      = @{
+              "SequenceModelList"            = $null
+          }
+          "Tags"                              = @("torr", "mann")
+          "Comments"                          = $null
+        }
 
-- task: netsparker-cloud@1
-  inputs:
-    apiConnection: 'azuredevopstest'
-    scanTypes: '2'
-    scanWebSites: '2e1498ff-ad9a-4569-c4e4-ae8301b8e800'
-    scanWebSitesProfile: '7b8692de-d855-4d7d-dc24-af2a02ccb87d'
-    buildFail: true
-    severity: 'Critical,High,Medium'
-    stopScan: true
+        Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body ($body | ConvertTo-Json -Depth 10)
+
+  - task: netsparker-cloud@1
+    inputs:
+      apiConnection: 'azuredevopstest'
+      scanTypes: '2'
+      scanWebSites: '2e1498ff-ad9a-4569-c4e4-ae8301b8e800'
+      scanWebSitesProfile: '7b8692de-d855-4d7d-dc24-af2a02ccb87d'
+      buildFail: true
+      severity: 'Critical,High,Medium'
+      stopScan: true
