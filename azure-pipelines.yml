@@ -6,12 +6,480 @@ pool:
 
 steps:
 
-  - task: netsparker-cloud@1
-    inputs:
-      apiConnection: 'azuredevopstest'
-      scanTypes: '2'
-      scanWebSites: '2e1498ff-ad9a-4569-c4e4-ae8301b8e800'
-      scanWebSitesProfile: '7b8692de-d855-4d7d-dc24-af2a02ccb87d'
-      buildFail: true
-      severity: 'Critical,High,Medium'
-      stopScan: true
+- task: PythonScript@0
+  inputs:
+    scriptSource: 'inline'
+    script: |
+      import requests
+      import csv
+      import json
+      
+      def get_data(url, headers, page):
+          params = {
+              'page': page,
+              'pageSize': 10
+          }
+          response = requests.get(url, headers=headers, params=params)
+          if response.status_code == 200:
+              return response.json()
+          else:
+              print("Failed to retrieve data for page {}. Status code: {}".format(page, response.status_code))
+              return None
+      
+      def write_to_csv(data, csv_writer):
+          for item in data:
+              csv_writer.writerow([
+                  item['Id'],
+                  item['CreatedAt'],
+                  item['UpdatedAt'],
+                  item['RootUrl'],
+                  item['Name'],
+                  item['Description'],
+                  item['TechnicalContactEmail'],
+                  item['LicenseType'],
+                  item['AgentMode'],
+                  ",".join(item['Tags'])
+              ])
+      
+      def create_csv_dictionary(csv_file):
+          data_dictionary = {}
+          with open(csv_file, mode='r', encoding='utf-8') as file:
+              reader = csv.DictReader(file)
+              for row in reader:
+                  data_dictionary[row['RootUrl']] = row
+          return data_dictionary
+      
+      def add_new_target(api_url, headers, data):
+          response = requests.post(api_url, headers=headers, json=data)
+          if response.status_code == 201:
+              print("New target added successfully.")
+          else:
+              print("Failed to add the new target. Status code:", response.status_code)
+              print("Response body:", response.text)
+      
+      # Function to check if a target_url already exists in the data_dictionary
+      def target_url_exists(target_url, data_dictionary):
+          for existing_data in data_dictionary.values():
+              existing_url = existing_data["RootUrl"].replace("http://", "").replace("https://", "")
+              if target_url == existing_url:
+                  return True
+          return False
+      
+      url = 'https://www.netsparkercloud.com/api/1.0/websites/list'
+      headers = {
+          'Accept': 'application/json',
+          'Authorization': 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
+      }
+      
+      page = 1
+      all_data = []
+      
+      while True:
+          data = get_data(url, headers, page)
+          if not data:
+              break
+          if 'List' in data and data['List']:
+              all_data.extend(data['List'])
+              page += 1
+          else:
+              print("Unexpected response structure:")
+              print(data)
+              break
+      
+      # Write all_data to CSV file
+      csv_file = 'output.csv'
+      with open(csv_file, mode='w', newline='', encoding='utf-8') as file:
+          fieldnames = [
+              'Id', 'CreatedAt', 'UpdatedAt', 'RootUrl', 'Name',
+              'Description', 'TechnicalContactEmail', 'LicenseType', 'AgentMode', 'Tags'
+          ]
+          writer = csv.writer(file)
+          writer.writerow(fieldnames)
+          write_to_csv(all_data, writer)
+      
+      print(f"Data saved to {csv_file}.")
+      
+      # Create a dictionary from the CSV file
+      data_dictionary = create_csv_dictionary(csv_file)
+      
+      # Prompt user to search for a target RootUrl
+      target_url_input = input("To look for a target, please enter the RootUrl: ")
+      target_url = target_url_input.strip().replace("http://", "").replace("https://", "")  # Remove http/https
+      if target_url_exists(target_url, data_dictionary):
+          print("The RootUrl you entered already exists.")
+      else:
+          add_new_target_input = input("Do you want to add the given RootUrl as a new target? (yes/no): ")
+          if add_new_target_input.lower() == 'yes':
+              # Get input values for the new target
+              agent_mode = input("AgentMode (e.g., Cloud): ")
+              groups_input = input("Groups (comma-separated values, e.g., Marketing Sites,Staging): ")
+      
+              # Split the groups_input into a list if not blank, otherwise set it to an empty list
+              groups = groups_input.split(',') if groups_input.strip() else []
+      
+              name = input("Name (e.g., Blue Fizz): ")
+              description = input("Description: ")
+              tags = input("Tags (comma-separated values, e.g., TagWithNoValue,TagWithValue:Value): ").split(',')
+      
+              # Create the data dictionary for the API call
+              new_target_data = {
+                  "AgentMode": agent_mode,
+                  "RootUrl": target_url_input,  # Use the original input including http/https
+                  "Groups": groups,
+                  "LicenseType": "Subscription",  # Automatically set the LicenseType to "Subscription"
+                  "Name": name,
+                  "Description": description,
+                  "Tags": tags
+              }
+      
+              # Make the API call to add the new target
+              add_new_target('https://www.netsparkercloud.com/api/1.0/websites/new', headers, new_target_data)
+          else:
+              print("No new target added.")
+      
+      
+      # Function to prompt the user for yes/no input
+      def get_yes_or_no(prompt):
+          while True:
+              user_input = input(prompt + " (yes/no): ").strip().lower()
+              if user_input in {"yes", "no"}:
+                  return user_input == "yes"
+              print("Invalid input. Please enter 'yes' or 'no'.")
+      
+      # Function to prompt the user for a name
+      def get_name(prompt):
+          return input(prompt + ": ").strip()
+      
+      # Function to prompt the user for subset data for Form Authentication
+      def get_form_auth_subset_data():
+          login_form_url = input("Please enter the login form URL: ").strip()
+          login_required_url = input("Please enter the login required URL: ").strip()
+          # Add other fields as needed for Form Authentication
+          return {
+              "LoginFormUrl": login_form_url,
+              "LoginRequiredUrl": login_required_url
+              # Add other fields to the dictionary as needed
+          }
+      
+      # Function to prompt the user for username and password for personas
+      def get_personas_data():
+          personas_data = {
+              "Personas": []
+          }
+          while True:
+              is_active = get_yes_or_no("Is the persona active?")
+              if not is_active:
+                  break
+      
+              username = input("Please enter the persona's username: ").strip()
+              password = input("Please enter the persona's password: ").strip()
+      
+              persona = {
+                  "IsActive": is_active,
+                  "Password": password,
+                  "UserName": username,
+                  "OtpType": "None",  # You can customize this field if needed
+                  # Add other fields for personas as needed
+              }
+              personas_data["Personas"].append(persona)
+      
+          return personas_data
+      
+      # Function to prompt the user for OAuth2 parameter values
+      def get_oauth2_data():
+          oauth2_data = {
+              "FlowType": "Custom",
+              "AuthenticationType": "None",
+              "AccessTokenEndpoint": {},
+              "AuthorizationCodeEndpoint": {},
+              "AccessTokenItems": [],
+              "AuthorizationCodeItems": [],
+              "ResponseFields": {},
+              "ThreeLeggedFields": {"Enabled": False},
+              "Enabled": False
+          }
+      
+          enable_oauth2 = get_yes_or_no("Do you want to set up OAuth2 for the scan profile?")
+          oauth2_data["Enabled"] = enable_oauth2
+      
+          if enable_oauth2:
+              oauth2_data["FlowType"] = input("OAuth2 Flow Type (e.g., Custom, Authorization Code): ").strip()
+              oauth2_data["AuthenticationType"] = input("OAuth2 Authentication Type (e.g., None, Client Credentials): ").strip()
+      
+              # Prompt for Access Token Endpoint details
+              access_token_endpoint_url = input("Access Token Endpoint URL: ").strip()
+              access_token_endpoint_content_type = input("Access Token Endpoint Content Type: ").strip()
+              access_token_endpoint_method = input("Access Token Endpoint Method (e.g., POST, GET): ").strip()
+              oauth2_data["AccessTokenEndpoint"] = {
+                  "Url": access_token_endpoint_url,
+                  "ContentType": access_token_endpoint_content_type,
+                  "Method": access_token_endpoint_method
+              }
+      
+              # Prompt for Authorization Code Endpoint details
+              auth_code_endpoint_url = input("Authorization Code Endpoint URL: ").strip()
+              auth_code_endpoint_content_type = input("Authorization Code Endpoint Content Type: ").strip()
+              auth_code_endpoint_method = input("Authorization Code Endpoint Method (e.g., POST, GET): ").strip()
+              oauth2_data["AuthorizationCodeEndpoint"] = {
+                  "Url": auth_code_endpoint_url,
+                  "ContentType": auth_code_endpoint_content_type,
+                  "Method": auth_code_endpoint_method
+              }
+      
+              # Prompt for Access Token items
+              access_token_items = []
+              while True:
+                  item_name = input("Access Token Item Name (e.g., grant_type, username): ").strip()
+                  if not item_name:
+                      break
+                  item_value = input("Access Token Item Value: ").strip()
+                  is_encoded = get_yes_or_no("Is Access Token Item Encoded?")
+                  is_encrypted = get_yes_or_no("Is Access Token Item Encrypted?")
+                  access_token_items.append({
+                      "Name": item_name,
+                      "Value": item_value,
+                      "IsEncoded": is_encoded,
+                      "IsEncrypted": is_encrypted
+                  })
+              oauth2_data["AccessTokenItems"] = access_token_items
+      
+              # Prompt for Authorization Code items
+              auth_code_items = []
+              while True:
+                  item_name = input("Authorization Code Item Name (e.g., grant_type, code): ").strip()
+                  if not item_name:
+                      break
+                  item_value = input("Authorization Code Item Value: ").strip()
+                  is_encoded = get_yes_or_no("Is Authorization Code Item Encoded?")
+                  is_encrypted = get_yes_or_no("Is Authorization Code Item Encrypted?")
+                  auth_code_items.append({
+                      "Name": item_name,
+                      "Value": item_value,
+                      "IsEncoded": is_encoded,
+                      "IsEncrypted": is_encrypted
+                  })
+              oauth2_data["AuthorizationCodeItems"] = auth_code_items
+      
+              # Prompt for Response Fields
+              response_fields = {}
+              response_fields["AccessToken"] = input("Access Token Response Field: ").strip()
+              response_fields["RefreshToken"] = input("Refresh Token Response Field: ").strip()
+              response_fields["Expire"] = input("Access Token Expires At Response Field: ").strip()
+              response_fields["TokenType"] = input("Token Type Response Field: ").strip()
+              response_fields["IsTokenTypeFixed"] = get_yes_or_no("Is Token Type Fixed?")
+              oauth2_data["ResponseFields"] = response_fields
+      
+              # Prompt for Three Legged Fields
+              enable_three_legged = get_yes_or_no("Enable Three-Legged OAuth?")
+              oauth2_data["ThreeLeggedFields"]["Enabled"] = enable_three_legged
+              if enable_three_legged:
+                  oauth2_data["ThreeLeggedFields"]["Username"] = input("Three-Legged OAuth Username Field: ").strip()
+                  oauth2_data["ThreeLeggedFields"]["Password"] = input("Three-Legged OAuth Password Field: ").strip()
+      
+          return oauth2_data
+      
+      
+      # Prompting the user for ProfileName
+      profile_name = get_name("Please enter a name for the profile")
+      
+      # Prompting the user for Basic Authentication setup
+      enable_basic_auth = get_yes_or_no("Do you want to set up Basic Authentication for the scan profile?")
+      basic_auth_username = "test"
+      basic_auth_password = "test"
+      if enable_basic_auth:
+          basic_auth_username = input("Please enter the Basic Authentication username: ").strip()
+          basic_auth_password = input("Please enter the Basic Authentication password: ").strip()
+      
+      # Prompting the user for Form Authentication setup
+      enable_form_auth = get_yes_or_no("Do you want to set up Form Authentication for the scan profile?")
+      form_auth_data = {}
+      if enable_form_auth:
+          form_auth_data = get_form_auth_subset_data()
+      
+      
+      
+      # Root URL from the original code
+      root_url = "http://aspnet.testinvicti.com/"  # Replace this with the actual root URL from your original code
+      
+      # Constructing the JSON request body
+      scan_profile_data = {
+          "CreateType": "Website",
+          "IsPrimary": True,
+          "IsShared": True,
+          "IsTimeWindowEnabled": False,
+          "ProfileName": profile_name,
+          "TargetUri": root_url,
+          "AdditionalWebsites": [],
+          "BasicAuthenticationApiModel": {
+              "Credentials": [
+                  {
+                      "AuthenticationType": "Basic",
+                      "Domain": "",
+                      "Password": basic_auth_password,
+                      "UriPrefix": "http://test.com",
+                      "UserName": basic_auth_username,
+                      "IsReplacedCredentials": False
+                  }
+              ],
+              "IsEnabled": enable_basic_auth,
+              "NoChallenge": False
+          },
+          "Cookies": "",
+          "CrawlAndAttack": True,
+          "EnableHeuristicChecksInCustomUrlRewrite": True,
+          "ExcludedLinks": [
+              {
+                  "RegexPattern": "(log|sign)\\-?(out|off)"
+              }
+          ],
+          "ExcludedUsageTrackers": [
+              {
+                  "Url": "UA-XXXXX-Y"
+              }
+          ],
+          "DisallowedHttpMethods": [],
+          "ExcludeLinks": True,
+          "ExcludeAuthenticationPages": True,
+          "FindAndFollowNewLinks": True,
+          "FormAuthenticationSettingModel": {
+              "Integrations": {},
+              "CustomScripts": [],
+              "InteractiveLoginRequired": False,
+              "DefaultPersonaValidation": True,  # Set this to False initially
+              "DetectBearerToken": True,
+              "DisableLogoutDetection": False,
+              "IsEnabled": enable_form_auth,
+              "IsNotVerified": False,
+              **form_auth_data,  # Include the form_auth_data here
+              "LogoutKeywordPatterns": [
+                  {
+                      "Pattern": "Signin required",
+                      "Regex": True
+                  }
+              ],
+              "LogoutKeywordPatternsValue": "[{\"Pattern\":\"Signin required\",\"Regex\":true}]",
+              "LogoutRedirectPattern": "http://example.com/Default.php?ref=*",
+              "OverrideTargetUrl": False,
+              "PersonasValidation": False,  # Set this to False initially
+              "AuthorizationTokenRules": []
+          },
+          "AuthenticationProfileOption": "DontUse",
+          "ImportedLinks": [],
+          "ImportedFiles": [],
+          "IsMaxScanDurationEnabled": False,
+          "MaxDynamicSignatures": 60,
+          "MaxScanDuration": 48,
+          "Scope": "EnteredPathAndBelow",
+          "SubPathMaxDynamicSignatures": 30,
+          "UrlRewriteAnalyzableExtensions": "htm,html",
+          "UrlRewriteBlockSeparators": "/$.,;|:",
+          "UrlRewriteMode": "Custom",
+          "UrlRewriteRules": [
+              {
+                  "PlaceholderPattern": "/blog/{category}/{title}"
+              }
+          ],
+          "PreRequestScriptSetting": {
+              "IsEnabled": False
+          },
+          "DoNotDifferentiateProtocols": True,
+          "OAuth2SettingModel": {
+              "FlowType": "Custom",
+              "AuthenticationType": "None",
+              "AccessTokenEndpoint": {
+                  "Url": "https://localhost/oauth/token",
+                  "ContentType": "application/x-www-form-urlencoded",
+                  "Method": "POST"
+              },
+              "AuthorizationCodeEndpoint": {
+                  "Url": "https://localhost/oauth/token",
+                  "ContentType": "application/x-www-form-urlencoded",
+                  "Method": "POST"
+              },
+              "AccessTokenItems": [
+                  {
+                      "Name": "grant_type",
+                      "Value": "password",
+                      "IsEncoded": False,
+                      "IsEncrypted": False
+                  },
+                  {
+                      "Name": "username",
+                      "Value": "test",
+                      "IsEncoded": False,
+                      "IsEncrypted": False
+                  },
+                  {
+                      "Name": "password",
+                      "Value": "test",
+                      "IsEncoded": False,
+                      "IsEncrypted": True
+                  }
+              ],
+              "AuthorizationCodeItems": [
+                  {
+                      "Name": "grant_type",
+                      "Value": "password",
+                      "IsEncoded": False,
+                      "IsEncrypted": False
+                  },
+                  {
+                      "Name": "username",
+                      "Value": "test",
+                      "IsEncoded": False,
+                      "IsEncrypted": False
+                  },
+                  {
+                      "Name": "password",
+                      "Value": "test",
+                      "IsEncoded": False,
+                      "IsEncrypted": True
+                  }
+              ],
+              "ResponseFields": {
+                  "AccessToken": "accessToken",
+                  "RefreshToken": "refreshToken",
+                  "Expire": "accessTokenExpiresAt",
+                  "TokenType": "token_type",
+                  "IsTokenTypeFixed": True
+              },
+              "ThreeLeggedFields": {
+                  "Enabled": True,
+                  "Username": "user",
+                  "Password": "pwd",
+                  "CustomScripts": []
+              },
+             
+          },
+          "EnablePciScanTask": False,
+          "Tags": []
+      }
+      
+      # Get the personas data if Form Authentication is enabled
+      scan_profile_data["FormAuthenticationSettingModel"]["IsEnabled"] = enable_form_auth
+      if enable_form_auth:
+          personas_data = get_personas_data()["Personas"]
+          if personas_data:  # Check if at least one persona is entered
+              scan_profile_data["FormAuthenticationSettingModel"]["Personas"] = personas_data
+              scan_profile_data["FormAuthenticationSettingModel"]["DefaultPersonaValidation"] = True  # Set to True when personas are entered
+              scan_profile_data["FormAuthenticationSettingModel"]["PersonasValidation"] = True  # Set to True when personas are entered
+          else:
+              print("No personas entered. DefaultPersonaValidation and PersonasValidation set to False.")
+      
+      # Now, you can use the scan_profile_data to make the API call to create a scan profile
+      # Send the POST request with the JSON data to the API endpoint
+      url = "https://www.netsparkercloud.com/api/1.0/scanprofiles/new"
+      headers = {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": "Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0="
+      }
+      
+      # Pretty print the JSON request body before making the API call
+      print("JSON Request Body:")
+      print(json.dumps(scan_profile_data, indent=2))
+      
+      response = requests.post(url, json=scan_profile_data, headers=headers)
+      
+      # Display the response
+      print("Response body:", response.json())
