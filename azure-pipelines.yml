@@ -9,23 +9,15 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      $headers = @{
-          'Content-Type' = 'application/json'
-          'Accept' = 'application/json'
-          'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWBpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
-      }
-      
-      $body = @{
-          AgentMode = 'Cloud'
-          RootUrl = 'http://www.example2.com'
-          Groups = @()
-          LicenseType = 'Subscription'
-          Name = 'test2'
-          Description = 'asa'
-          Tags = @('')
-      }
-      
-      Invoke-RestMethod -Uri 'https://www.netsparkercloud.com/api/1.0/websites/new' -Method Post -Headers $headers -Body ($body | ConvertTo-Json)
+      & curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' --header 'Authorization: Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnT0=' -d '{
+        "AgentMode": "Cloud",
+        "RootUrl": "http://www.example2.com",
+        "Groups": [],
+        "LicenseType": "Subscription",
+        "Name": "test2",
+        "Description": "asa",
+        "Tags": [""]
+      }' 'https://www.netsparkercloud.com/api/1.0/websites/new'
 - task: netsparker-cloud@1
   inputs:
     apiConnection: 'azuredevopstest'
