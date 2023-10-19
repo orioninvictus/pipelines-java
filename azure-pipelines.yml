@@ -6,6 +6,35 @@ pool:
 
 steps:
 
+- task: PythonScript@0
+  inputs:
+    scriptSource: 'inline'
+    script: |
+      import requests
+      import json
+      
+      url = 'https://www.netsparkercloud.com/api/1.0/websites/list/new'
+      headers = {"Content-Type": "application/json", "Accept": "application/json", "Authorization": "Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0=" }
+      
+      data = {
+          "AgentMode": "Cloud",
+          "RootUrl": "http://www.example2.com",
+          "Groups": [],
+          "LicenseType": "Subscription",
+          "Name": "test3",
+          "Description": "",
+          "Tags": [
+              ""
+          ]
+      }
+      
+      response = requests.post(url, headers=headers, data=json.dumps(data))
+      
+      if response.status_code == 201:
+          print("New target added successfully.")
+      else:
+          print("Failed to add the new target. Status code:", response.status_code)
+          print("Response body:", response.text)
 - task: netsparker-cloud@1
   inputs:
     apiConnection: 'azuredevopstest'
