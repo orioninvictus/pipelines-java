@@ -9,24 +9,30 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      $url = 'https://www.netsparkercloud.com/api/1.0/websites/list/new'
-      $headers = @{'Content-Type' = 'application/json'; 'Accept' = 'application/json'; 'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0=' }
-      
-      $data = @'
-      {
-          "AgentMode": "Cloud",
-          "RootUrl": "http://www.example2.com",
-          "Groups": [],
-          "LicenseType": "Subscription",
-          "Name": "test4",
-          "Description": "",
-          "Tags": [
-              "a"
-          ]
+      # Set the URL and headers
+      $url = "https://www.netsparkercloud.com/api/1.0/websites/new"
+      $headers = @{
+          "Content-Type" = "application/json"
+          "Accept" = "application/json"
+          "Authorization" = "Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0="
       }
-      '@
       
-      $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Post -Body $data
+      # Set the request data
+      $requestData = @{
+          "AgentMode" = "Cloud"
+          "RootUrl" = "http://www.example2.com"
+          "Groups" = @()
+          "LicenseType" = "Subscription"
+          "Name" = "test2"
+          "Description" = "asa"
+          "Tags" = @("")
+      }
+      
+      # Convert the data to JSON
+      $jsonData = $requestData | ConvertTo-Json
+      
+      # Send the POST request
+      $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Post -Body $jsonData
       
       if ($response.StatusCode -eq 201) {
           Write-Host "New target added successfully."
