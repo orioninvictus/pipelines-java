@@ -10,7 +10,10 @@ steps:
     script: 'pip install requests'
 - task: CmdLine@2
   inputs:
-    script: 'pip install jsonlib'
+    script: 'pip install pipwin'
+- task: CmdLine@2
+  inputs:
+    script: 'pipwin install jsonlib'
 - task: PythonScript@0
   inputs:
     scriptSource: 'inline'
