@@ -9,37 +9,25 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      # Set the URL and headers
-      $url = "https://www.netsparkercloud.com/api/1.0/websites/new"
+      $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes('bdb3e6e42e8d4cd53ff8ae5801fec208:fIT+6HKLO3oio0QBiUYbi3GLq3DTHPv4/FrTZt438zY='))
+      
       $headers = @{
-          "Content-Type" = "application/json"
-          "Accept" = "application/json"
-          "Authorization" = "Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0="
+          'Content-Type' = 'application/json'
+          'Accept' = 'application/json'
+          'Authorization' = 'Basic ' + $base64AuthInfo
       }
       
-      # Set the request data
-      $requestData = @{
-          "AgentMode" = "Cloud"
-          "RootUrl" = "http://www.example2.com"
-          "Groups" = @()
-          "LicenseType" = "Subscription"
-          "Name" = "test2"
-          "Description" = "asa"
-          "Tags" = @("")
-      }
+      $body = @{
+          AgentMode = 'Cloud'
+          RootUrl = 'http://www.example2.com'
+          Groups = @()
+          LicenseType = 'Subscription'
+          Name = 'test2'
+          Description = 'asa'
+          Tags = @('')
+      } | ConvertTo-Json
       
-      # Convert the data to JSON
-      $jsonData = $requestData | ConvertTo-Json
-      
-      # Send the POST request
-      $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Post -Body $jsonData
-      
-      if ($response.StatusCode -eq 201) {
-          Write-Host "New target added successfully."
-      } else {
-          Write-Host "Failed to add the new target. Status code: $($response.StatusCode)"
-          Write-Host "Response body: $($response.Content)"
-      }
+      Invoke-RestMethod -Uri 'https://www.netsparkercloud.com/api/1.0/websites/new' -Method Post -Headers $headers -Body $body
 - task: netsparker-cloud@1
   inputs:
     apiConnection: 'azuredevopstest'
