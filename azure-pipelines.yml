@@ -5,7 +5,12 @@ pool:
   vmImage: 'windows-latest'
 
 steps:
-
+- task: CmdLine@2
+  inputs:
+    script: 'pip install requests'
+- task: CmdLine@2
+  inputs:
+    script: 'pip install jsonlib'
 - task: PythonScript@0
   inputs:
     scriptSource: 'inline'
