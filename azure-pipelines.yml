@@ -9,29 +9,10 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      # Encode the username and password for Basic Authentication
-      $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes('bdb3e6e42e8d4cd53ff8ae5801fec208:fIT+6HKLO3oio0QBiUYbi3GLq3DTHPv4/FrTZt438zY='))
-      
-      # Create headers for authentication
-      $headers = @{
-          'Authorization' = 'Basic ' + $base64AuthInfo
-      }
-      
-      # Test the authentication by making a simple request to a test endpoint
-      $response = Invoke-RestMethod -Uri 'https://www.netsparkercloud.com/api/1.0/test' -Headers $headers
-      
-      # Output the response to check if authentication is successful
-      Write-Host $response
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes('bdb3e6e42e8d4cd53ff8ae5801fec208:fIT+6HKLO3oio0QBiUYbi3GLq3DTHPv4/FrTZt438zY='))
-      
       $headers = @{
           'Content-Type' = 'application/json'
           'Accept' = 'application/json'
-          'Authorization' = 'Basic ' + $base64AuthInfo
+          'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWBpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
       }
       
       $body = @{
@@ -42,9 +23,9 @@ steps:
           Name = 'test2'
           Description = 'asa'
           Tags = @('')
-      } | ConvertTo-Json
+      }
       
-      Invoke-RestMethod -Uri 'https://www.netsparkercloud.com/api/1.0/websites/new' -Method Post -Headers $headers -Body $body
+      Invoke-RestMethod -Uri 'https://www.netsparkercloud.com/api/1.0/websites/new' -Method Post -Headers $headers -Body ($body | ConvertTo-Json)
 - task: netsparker-cloud@1
   inputs:
     apiConnection: 'azuredevopstest'
