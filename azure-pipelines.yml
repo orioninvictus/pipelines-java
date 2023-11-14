@@ -87,10 +87,10 @@ steps:
               Integrations = @{}
               CustomScripts = @()
               InteractiveLoginRequired = $false
-              DefaultPersonaValidation = $true
+              DefaultPersonaValidation = $false
               DetectBearerToken = $true
               DisableLogoutDetection = $false
-              IsEnabled = $true
+              IsEnabled = $false
               IsNotVerified = $false
               LoginFormUrl = 'http://example.com/login.php'
               LoginRequiredUrl = 'http://example.com/admin.php'
