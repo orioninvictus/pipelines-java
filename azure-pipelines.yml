@@ -134,6 +134,23 @@ steps:
       } | ConvertTo-Json
       
       Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body $body
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      $uri = 'https://www.netsparkercloud.com/api/1.0/scans/newwithprofile'
+      $headers = @{
+          'Content-Type' = 'application/json'
+          'Accept' = 'application/json'
+          'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
+      }
+      
+      $body = @{
+          ProfileName = "http://example10.com/"
+          TargetUri = "edenred_example"
+      } | ConvertTo-Json
+      
+      Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body $body
       Start-Sleep -Seconds 10
       $jsonResponse = @"
       
@@ -272,6 +289,7 @@ steps:
       
       # Extract the 'Id' parameter value
       $idValue =
+      Write-Host "##vso[task.setvariable variable=scanid;]idValue"
 - task: netsparker-cloud@1
   inputs:
     apiConnection: 'azuredevopstest'
