@@ -291,13 +291,9 @@ steps:
             
       # Set the environment variable for Azure DevOps
       Write-Host "##vso[task.setvariable variable=my.ver]$idValue"
-      displayName: 'Set vars'
-            
-      
       # Your PowerShell script here to read the environment variable
       $ver = '$(my.ver)'
       Write-Host "ID from variable: $ver"
-      displayName: 'Read vars'
 - task: netsparker-cloud@1
   inputs:
     apiConnection: 'azuredevopstest'
