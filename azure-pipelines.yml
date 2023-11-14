@@ -146,7 +146,7 @@ steps:
       }
       
       $body = @{
-          ProfileName = "edenred_example"
+          ProfileName = "edenred_example_2"
           TargetUri = "http://example10.com/"
       } | ConvertTo-Json
       
