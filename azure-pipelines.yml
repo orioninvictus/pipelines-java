@@ -37,7 +37,7 @@ steps:
     targetType: 'inline'
     script: |
       # Sleep for 1 minute
-      Start-Sleep -Seconds 60
+      Start-Sleep -Seconds 10
       $uri = 'https://www.netsparkercloud.com/api/1.0/scanprofiles/new'
       $headers = @{
           'Content-Type' = 'application/json'
