@@ -5,24 +5,34 @@ pool:
   vmImage: 'windows-latest'
 
 steps:
-- task: PowerShell@2
+- task: AzurePowerShell@5
   inputs:
-    apiConnection: 'azuredevopstest'
-    targetType: 'inline'
-    script: |
-   
+    ScriptType: 'InlineScript'
+    Inline: |
+      $headers = @{
+          'Content-Type' = 'application/json'
+          'Accept' = 'application/json'
+          'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
+      }
       
       $body = @{
-          AgentMode = 'Cloud'
-          RootUrl = 'http://www.example2.com'
-          Groups = @()
-          LicenseType = 'Subscription'
-          Name = 'test2'
-          Description = 'asa'
-          Tags = @('')
-      } | ConvertTo-Json
+          "AgentMode" = "Cloud"
+          "RootUrl" = "http://example5.com"
+          "LicenseType" = "Subscription"
+          "Name" = "Blue Fizz 55"
+          "Description" = "Sample Description"
+          "Tags" = @("TagWithNoValue", "TagWithValue:Value")
+      }
       
-      Invoke-RestMethod -Uri 'https://www.netsparkercloud.com/api/1.0/websites/new' -Method Post -Headers $headers -Body $body
+      $jsonBody = $body | ConvertTo-Json
+      
+      $url = 'https://www.netsparkercloud.com/api/1.0/websites/new'
+      
+      $response = Invoke-RestMethod -Uri $url -Method Post -Headers $headers -Body $jsonBody
+      
+      # Display the response
+      Write-Output $response
+    azurePowerShellVersion: 'LatestVersion'
 - task: netsparker-cloud@1
   inputs:
     apiConnection: 'azuredevopstest'
