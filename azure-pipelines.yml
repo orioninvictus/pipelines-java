@@ -289,7 +289,7 @@ steps:
       
       # Extract the 'Id' parameter value
       $idValue =
-      Write-Host "##vso[task.setvariable variable=scanid;]idValue"
+      echo "##vso[task.setvariable variable=scan_id;isOutput=true]idValue"
 - task: netsparker-cloud@1
   inputs:
     apiConnection: 'azuredevopstest'
