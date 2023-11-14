@@ -106,8 +106,8 @@ steps:
               Personas = @(
                   @{
                       IsActive = $true
-                      Password = 'pass'
-                      UserName = 'user'
+                      Password = 'passadas'
+                      UserName = 'userwrere'
                       OtpType = 'Totp'
                       SecretKey = ''
                       Digit = 6
