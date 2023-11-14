@@ -291,9 +291,9 @@ steps:
             
       # Set the environment variable for Azure DevOps
       Write-Host "##vso[task.setvariable variable=my.ver]$idValue"
-        displayName: 'Set vars'
+      displayName: 'Set vars'
             
-      - powershell: |
+      
       # Your PowerShell script here to read the environment variable
       $ver = '$(my.ver)'
       Write-Host "ID from variable: $ver"
