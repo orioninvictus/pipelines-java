@@ -289,7 +289,19 @@ steps:
       
       # Extract the 'Id' parameter value
       $idValue =
-      echo "##vso[task.setvariable variable=scan_id;isOutput=true]idValue"
+      $jsonString = Get-Content -Path ./package.json
+      $jsonObj = $jsonString | ConvertFrom-Json
+   
+      $jsonObj.id
+   
+      Write-Host "##vso[task.setvariable variable=my.ver]$($jsonObj.id)"
+
+    displayName: 'Set vars'
+      $ver = '$(my.ver)'
+   
+      $ver
+   
+    displayName: 'Read vars'
 - task: netsparker-cloud@1
   inputs:
     apiConnection: 'azuredevopstest'
