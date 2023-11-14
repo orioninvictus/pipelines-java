@@ -5,10 +5,10 @@ pool:
   vmImage: 'windows-latest'
 
 steps:
-- task: AzurePowerShell@5
+- task: PowerShell@2
   inputs:
-    ScriptType: 'InlineScript'
-    Inline: |
+    targetType: 'inline'
+    script: |
       $headers = @{
           'Content-Type' = 'application/json'
           'Accept' = 'application/json'
@@ -32,7 +32,6 @@ steps:
       
       # Display the response
       Write-Output $response
-    azurePowerShellVersion: 'LatestVersion'
 - task: netsparker-cloud@1
   inputs:
     apiConnection: 'azuredevopstest'
