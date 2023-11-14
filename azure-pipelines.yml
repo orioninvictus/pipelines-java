@@ -17,9 +17,9 @@ steps:
       
       $body = @{
           "AgentMode" = "Cloud"
-          "RootUrl" = "http://example10.com"
+          "RootUrl" = "http://example11.com"
           "LicenseType" = "Subscription"
-          "Name" = "Blue Fizz 222"
+          "Name" = "Blue Fizz 2222"
           "Description" = "Sample Description"
           "Tags" = @("TagWithNoValue", "TagWithValue:Value")
       }
@@ -36,6 +36,8 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
+      # Sleep for 1 minute
+      Start-Sleep -Seconds 60
       $headers = @{
           'Content-Type' = 'application/json'
           'Accept' = 'application/json'
