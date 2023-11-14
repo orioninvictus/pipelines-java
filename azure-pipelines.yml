@@ -95,7 +95,7 @@ steps:
               "LoginRequiredUrl" = "http://example.com/admin.php"
               "LogoutKeywordPatterns" = @(
                       @{
-                          "Pattern" = "Signin required"
+                          "Pattern" = "Signin required";
                           "Regex" = $true
                       }
               )
@@ -104,18 +104,18 @@ steps:
               "OverrideTargetUrl" = $false
               "Personas" = @(
                   @{
-                      "IsActive" = $true
-                      "Password" = "pass"
-                      "UserName" = "user"
-                      "OtpType" = "Totp"
-                      "SecretKey" = ""
-                      "Digit" = 6
-                      "Period" = 30
-                      "FormAuthType" = "Manual"
-                      "IntegrationId" = "00000000-0000-0000-0000-000000000000"
-                      "Version" = "V2"
-                      "CyberArkUseStaticUsername" = $true
-                      "IsReplacedCredentials" = $false
+                      "IsActive" = $true;
+                      "Password" = "pass";
+                      "UserName" = "user";
+                      "OtpType" = "Totp";
+                      "SecretKey" = "";
+                      "Digit" = 6;
+                      "Period" = 30;
+                      "FormAuthType" = "Manual";
+                      "IntegrationId" = "00000000-0000-0000-0000-000000000000";
+                      "Version" = "V2";
+                      "CyberArkUseStaticUsername" = $true;
+                      "IsReplacedCredentials" = $false;
                       "Index" = 0
                   }
               )
