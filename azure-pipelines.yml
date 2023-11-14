@@ -150,7 +150,9 @@ steps:
           TargetUri = "http://example8.com/"
       } | ConvertTo-Json
       
-      $jsonResponse = Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body $body
+      $response = Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body $body
+      # Display the response
+      $response
       Start-Sleep -Seconds 10
       # Convert JSON response to PowerShell object
       $responseObject = $jsonResponse | ConvertFrom-Json
