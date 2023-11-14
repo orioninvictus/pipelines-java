@@ -111,13 +111,10 @@ steps:
                       "SecretKey" = ""
                       "Digit" = 6
                       "Period" = 30
-                      "Algorithm" = "Sha1"
                       "FormAuthType" = "Manual"
                       "IntegrationId" = "00000000-0000-0000-0000-000000000000"
                       "Version" = "V2"
-                      "UseStaticUsername" = $true
                       "CyberArkUseStaticUsername" = $true
-                      "AzureUseStaticUsername" = $true
                       "IsReplacedCredentials" = $false
                       "Index" = 0
                   }
