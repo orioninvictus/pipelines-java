@@ -7,13 +7,10 @@ pool:
 steps:
 - task: PowerShell@2
   inputs:
+    apiConnection: 'azuredevopstest'
     targetType: 'inline'
     script: |
-      $headers = @{
-          'Content-Type' = 'application/json'
-          'Accept' = 'application/json'
-          'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnT0='
-      }
+   
       
       $body = @{
           AgentMode = 'Cloud'
