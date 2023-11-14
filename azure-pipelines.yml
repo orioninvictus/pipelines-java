@@ -19,7 +19,7 @@ steps:
           "AgentMode" = "Cloud"
           "RootUrl" = "http://example9.com"
           "LicenseType" = "Subscription"
-          "Name" = "Blue Fizz 55"
+          "Name" = "Blue Fizz 555"
           "Description" = "Sample Description"
           "Tags" = @("TagWithNoValue", "TagWithValue:Value")
       }
