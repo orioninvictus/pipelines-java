@@ -285,23 +285,20 @@ steps:
       "@
       
       # Convert JSON response to PowerShell object
-      $responseObject = $jsonResponse | ConvertFrom-Json
+          $responseObject = $jsonResponse | ConvertFrom-Json
       
-      # Extract the 'Id' parameter value
-      $idValue =
-      $jsonString = Get-Content -Path ./package.json
-      $jsonObj = $jsonString | ConvertFrom-Json
-   
-      $jsonObj.id
-   
-      Write-Host "##vso[task.setvariable variable=my.ver]$($jsonObj.id)"
-
-      displayName: 'Set vars'
-      $ver = '$(my.ver)'
-   
-      $ver
-   
-      displayName: 'Read vars'
+          # Extract the 'Id' parameter value
+          $idValue = $responseObject.Id
+      
+          # Set the environment variable for Azure DevOps
+          Write-Host "##vso[task.setvariable variable=my.ver]$idValue"
+        displayName: 'Set vars'
+      
+      - powershell: |
+          # Read the environment variable
+          $ver = '$(my.ver)'
+          Write-Host "ID from variable: $ver"
+        displayName: 'Read vars'
 - task: netsparker-cloud@1
   inputs:
     apiConnection: 'azuredevopstest'
