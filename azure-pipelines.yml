@@ -297,9 +297,9 @@ steps:
       Write-Host "##vso[task.setvariable variable=my.ver]$($jsonObj.id)"
 
     displayName: 'Set vars'
-      $ver = '$(my.ver)'
+    $ver = '$(my.ver)'
    
-      $ver
+    $ver
    
     displayName: 'Read vars'
 - task: netsparker-cloud@1
