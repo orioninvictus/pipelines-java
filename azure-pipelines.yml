@@ -155,7 +155,7 @@ steps:
       $response
       Start-Sleep -Seconds 10
       # Convert JSON response to PowerShell object
-      $responseObject = $jsonResponse | ConvertFrom-Json
+      $responseObject = $jsonresponse | ConvertFrom-Json
             
       # Extract the 'Id' parameter value
       $idValue = $responseObject.Id
