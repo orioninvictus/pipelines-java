@@ -92,12 +92,12 @@ steps:
               "LoginFormUrl" = "http://example.com/login.php"
               "LoginRequiredUrl" = "http://example.com/admin.php"
               "LogoutKeywordPatterns" = @(
-                  @{
-                      "Pattern" = "Signin required"
-                      "Regex" = $true
-                  }
+                      @{
+                          "Pattern" = "Signin required"
+                          "Regex" = $true
+                      }
               )
-              "LogoutKeywordPatternsValue" = "[{\"Pattern\":\"Signin required\",\"Regex\":true}]"
+              "LogoutKeywordPatternsValue" = "[{'Pattern':'Signin required','Regex':true}]"
               "LogoutRedirectPattern" = "http://example.com/Default.php?ref=*"
               "OverrideTargetUrl" = $false
               "Personas" = @(
