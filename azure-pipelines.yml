@@ -299,6 +299,7 @@ steps:
     targetType: 'inline'
     script: |
       Start-Sleep -Seconds 20
+      Write-Host "The value of 'ver' is: $(my.ver)"
       # Define the URL and headers
       $url = 'https://www.netsparkercloud.com/api/1.0/scans/cancel'
       $headers = @{
@@ -309,7 +310,7 @@ steps:
       
       # Define the data to be sent in the request body
       $data = @{
-          Id = '$(my.ver)'
+          Id = $ver
       } | ConvertTo-Json
       
       # Send the HTTP request
