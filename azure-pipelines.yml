@@ -50,7 +50,7 @@ steps:
           IsPrimary = $true
           IsShared = $true
           IsTimeWindowEnabled = $false
-          ProfileName = 'edenred_example'
+          ProfileName = 'edenred_example_2'
           TargetUri = 'http://example10.com/'
           BasicAuthenticationApiModel = @{
               Credentials = @(
