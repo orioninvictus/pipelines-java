@@ -17,7 +17,7 @@ steps:
       
       $body = @{
           "AgentMode" = "Cloud"
-          "RootUrl" = "http://example10.com"
+          "RootUrl" = "http://example8.com"
           "LicenseType" = "Subscription"
           "Name" = "Blue Fizzz 22222"
           "Description" = "Sample Description"
@@ -50,8 +50,8 @@ steps:
           IsPrimary = $true
           IsShared = $true
           IsTimeWindowEnabled = $false
-          ProfileName = 'edenred_example_2'
-          TargetUri = 'http://example10.com/'
+          ProfileName = 'edenred_example_3'
+          TargetUri = 'http://example8.com/'
           BasicAuthenticationApiModel = @{
               Credentials = @(
                   @{
@@ -146,143 +146,12 @@ steps:
       }
       
       $body = @{
-          ProfileName = "edenred_example_2"
-          TargetUri = "http://example10.com/"
+          ProfileName = "edenred_example_3"
+          TargetUri = "http://example8.com/"
       } | ConvertTo-Json
       
-      Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body $body
+      $jsonresponse = Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body $body
       Start-Sleep -Seconds 10
-      $jsonResponse = @"
-      
-      {
-        "AdditionalWebsites": null,
-        "AgentId": null,
-        "AgentName": null,
-        "Cookies": "name1=value1; name2=value2",
-        "CrawlAndAttack": true,
-        "DeletedOn": null,
-        "EnableHeuristicChecksInCustomUrlRewrite": true,
-        "ExcludedLinks": "[\"(log|sign)\\\\-?(out|off)\"]",
-        "ExcludeLinks": true,
-        "DisallowedHttpMethods": "[]",
-        "FindAndFollowNewLinks": true,
-        "ImportedLinks": "/foo1\r\n/foo2",
-        "AllImportedLinks": "/foo1\r\n/foo2",
-        "DesktopScanId": null,
-        "InitiatedTime": "11/14/2023 04:41 PM",
-        "InitiatedDate": "11/14/2023",
-        "InitiatedAt": "2023-11-14T13:41:22.7271804+00:00",
-        "MaxDynamicSignatures": 60,
-        "MaxScanDuration": 48,
-        "Duration": "00:00:00",
-        "PolicyDescription": "checksum for nndsada",
-        "PolicyId": "453dd591-6974-4fcc-b821-af2a02cb7cb6",
-        "PolicyUserId": "bdb3e6e4-2e8d-4cd5-3ff8-ae5801fec208",
-        "PolicyIsDefault": false,
-        "PolicyIsShared": true,
-        "PolicyName": "ERC_TEST_CHECKSUM",
-        "AuthenticationProfileId": null,
-        "AuthenticationProfileOption": "DontUse",
-        "ReportPolicyDescription": "Default report policy.",
-        "ReportPolicyId": "013660af-56b7-4176-85be-cf2b84966816",
-        "ReportPolicyUserId": "3f2e0a60-a5ec-e311-80bc-000c29e428b5",
-        "ReportPolicyIsDefault": true,
-        "ReportPolicyIsShared": true,
-        "ReportPolicyName": "Default Report Policy",
-        "Scope": "EnteredPathAndBelow",
-        "SubPathMaxDynamicSignatures": 30,
-        "TargetPath": "/",
-        "TargetUrl": "http://example10.com/",
-        "TargetUrlRoot": "http://example10.com/",
-        "TimeWindow": null,
-        "TotalVulnerabilityCount": 0,
-        "UrlRewriteAnalyzableExtensions": "htm,html",
-        "UrlRewriteBlockSeparators": "/$.,;|:",
-        "UrlRewriteMode": "Heuristic",
-        "UrlRewriteRules": null,
-        "UrlRewriteExcludedLinks": null,
-        "UserId": "bdb3e6e4-2e8d-4cd5-3ff8-ae5801fec208",
-        "VcsCommitInfo": {
-          "CiBuildConfigurationName": null,
-          "CiBuildHasChange": null,
-          "CiBuildId": null,
-          "CiBuildServerName": "",
-          "CiBuildServerVersion": null,
-          "CiBuildUrl": null,
-          "CiNcPluginVersion": null,
-          "CiTimestamp": null,
-          "ComitterId": null,
-          "Committer": null,
-          "CommitterName": null,
-          "CommitterOverride": null,
-          "IntegrationSystem": null,
-          "IsCommiterExistAndAuthorizedInNc": null,
-          "VcsName": null,
-          "VcsVersion": null
-        },
-        "WebsiteName": "Blue Fizz 222",
-        "WebsiteUrl": "http://example10.com/",
-        "WebsiteDescription": "Sample Description",
-        "WebsiteProtocol": "Http",
-        "WebsiteIsDeleted": false,
-        "IsWebsiteLatestCompletedFullScanTask": false,
-        "EnablePciScanTask": false,
-        "PciScanTask": null,
-        "UserName": "Ercument Ekim",
-        "QueuedScanTaskExist": false,
-        "ScanTaskProfileId": "111e73c6-f913-423c-491c-b0ba02ee0dd2",
-        "ScanTaskProfile": {
-          "Id": "111e73c6-f913-423c-491c-b0ba02ee0dd2",
-          "IsMine": true,
-          "IsPrimary": true,
-          "IsShared": true,
-          "Name": "edenred_example",
-          "TargetUrl": "http://example10.com/",
-          "ScanPolicyName": "ERC_TEST_CHECKSUM",
-          "Tags": []
-        },
-        "WebsiteGroupIds": [
-          "341ff6c6-f1ae-44d4-40a6-ae5801fec2af"
-        ],
-        "Comments": null,
-        "BusinessLogicRecorderSetting": {
-          "SequenceModelList": null
-        },
-        "ScanProfileChanged": false,
-        "CompletedSteps": 0,
-        "EstimatedLaunchTime": null,
-        "EstimatedSteps": 0,
-        "FailureReason": null,
-        "FailureReasonDescription": null,
-        "FailureReasonString": null,
-        "GlobalThreatLevel": "Unknown",
-        "GlobalVulnerabilityCriticalCount": 0,
-        "GlobalVulnerabilityHighCount": 0,
-        "GlobalVulnerabilityInfoCount": 0,
-        "GlobalVulnerabilityBestPracticeCount": 0,
-        "GlobalVulnerabilityLowCount": 0,
-        "GlobalVulnerabilityMediumCount": 0,
-        "Id": "c1100f1d-b171-4c87-c949-b0ba02effebb",
-        "IsCompleted": false,
-        "Percentage": 0,
-        "Phase": "Pending",
-        "ScanTaskGroupId": "3a1258b6-0fd5-407b-c059-b0ba02effeb1",
-        "ScanType": "Full",
-        "ScheduledScanId": null,
-        "State": "Queued",
-        "StateChanged": null,
-        "ThreatLevel": "Unknown",
-        "VulnerabilityCriticalCount": 0,
-        "VulnerabilityHighCount": 0,
-        "VulnerabilityInfoCount": 0,
-        "VulnerabilityBestPracticeCount": 0,
-        "VulnerabilityLowCount": 0,
-        "VulnerabilityMediumCount": 0,
-        "WebsiteId": "d8761ff3-c2ad-4879-7ef6-b0ba029218bd",
-        "Initiated": "2023-11-14T13:41:22.7271804+00:00",
-        "Tags": []
-      }
-      "@
       # Convert JSON response to PowerShell object
       $responseObject = $jsonResponse | ConvertFrom-Json
             
