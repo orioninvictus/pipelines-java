@@ -17,9 +17,9 @@ steps:
       
       $body = @{
           "AgentMode" = "Cloud"
-          "RootUrl" = "http://example11.com"
+          "RootUrl" = "http://example121.com"
           "LicenseType" = "Subscription"
-          "Name" = "Blue Fizz 2222"
+          "Name" = "Blue Fizzz 22222"
           "Description" = "Sample Description"
           "Tags" = @("TagWithNoValue", "TagWithValue:Value")
       }
