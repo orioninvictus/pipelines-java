@@ -38,6 +38,7 @@ steps:
     script: |
       # Sleep for 1 minute
       Start-Sleep -Seconds 60
+      $uri = 'https://www.netsparkercloud.com/api/1.0/scanprofiles/new'
       $headers = @{
           'Content-Type' = 'application/json'
           'Accept' = 'application/json'
@@ -45,105 +46,94 @@ steps:
       }
       
       $body = @{
-          "CreateType" = "Website"
-          "IsPrimary" = $true
-          "IsShared" = $true
-          "IsTimeWindowEnabled" = $false
-          "ProfileName" = "edenred_example_2"
-          "TargetUri" = "http://example10.com/"
-          "BasicAuthenticationApiModel" = @{
-              "Credentials" = @(
+          CreateType = 'Website'
+          IsPrimary = $true
+          IsShared = $true
+          IsTimeWindowEnabled = $false
+          ProfileName = 'edenred_example'
+          TargetUri = 'http://example10.com/'
+          BasicAuthenticationApiModel = @{
+              Credentials = @(
                   @{
-                      "AuthenticationType" = "Basic"
-                      "Domain" = "example.com"
-                      "Password" = "pass"
-                      "UriPrefix" = "http://example.com/"
-                      "UserName" = "user"
-                      "IsReplacedCredentials" = $false
+                      AuthenticationType = 'Basic'
+                      Domain = 'example.com'
+                      Password = 'pass'
+                      UriPrefix = 'http://example.com/'
+                      UserName = 'user'
+                      IsReplacedCredentials = $false
                   }
               )
-              "IsEnabled" = $true
-              "NoChallenge" = $false
+              IsEnabled = $true
+              NoChallenge = $false
           }
-          "Cookies" = "name1=value1; name2=value2"
-          "CrawlAndAttack" = $true
-          "EnableHeuristicChecksInCustomUrlRewrite" = $true
-          "ExcludedLinks" = @(
+          Cookies = 'name1=value1; name2=value2'
+          CrawlAndAttack = $true
+          EnableHeuristicChecksInCustomUrlRewrite = $true
+          ExcludedLinks = @(
               @{
-                  "RegexPattern" = "(log|sign)\\-?(out|off)"
+                  RegexPattern = '(log|sign)\-?(out|off)'
               }
           )
-          "ExcludedUsageTrackers" = @(
+          ExcludedUsageTrackers = @(
               @{
-                  "Url" = "UA-XXXXX-Y"
+                  Url = 'UA-XXXXX-Y'
               }
           )
-          "DisallowedHttpMethods" = @()
-          "ExcludeLinks" = $true
-          "ExcludeAuthenticationPages" = $true
-          "FindAndFollowNewLinks" = $true
-          "FormAuthenticationSettingModel" = @{
-              "Integrations" = @{}
-              "CustomScripts" = @()
-              "InteractiveLoginRequired" = $false
-              "DefaultPersonaValidation" = $true
-              "DetectBearerToken" = $true
-              "DisableLogoutDetection" = $false
-              "IsEnabled" = $true
-              "IsNotVerified" = $false
-              "LoginFormUrl" = "http://example.com/login.php"
-              "LoginRequiredUrl" = "http://example.com/admin.php"
-              "LogoutKeywordPatterns" = @(
-                      @{
-                          "Pattern" = "Signin required";
-                          "Regex" = $true
-                      }
-              )
-              "LogoutKeywordPatternsValue" = "[{'Pattern':'Signin required','Regex':true}]"
-              "LogoutRedirectPattern" = "http://example.com/Default.php?ref=*"
-              "OverrideTargetUrl" = $false
-              "Personas" = @(
+          DisallowedHttpMethods = @()
+          ExcludeLinks = $true
+          ExcludeAuthenticationPages = $true
+          FindAndFollowNewLinks = $true
+          FormAuthenticationSettingModel = @{
+              Integrations = @{}
+              CustomScripts = @()
+              InteractiveLoginRequired = $false
+              DefaultPersonaValidation = $true
+              DetectBearerToken = $true
+              DisableLogoutDetection = $false
+              IsEnabled = $true
+              IsNotVerified = $false
+              LoginFormUrl = 'http://example.com/login.php'
+              LoginRequiredUrl = 'http://example.com/admin.php'
+              LogoutKeywordPatterns = @(
                   @{
-                      "IsActive" = $true;
-                      "Password" = "pass";
-                      "UserName" = "user";
-                      "OtpType" = "Totp";
-                      "SecretKey" = "";
-                      "Digit" = 6;
-                      "Period" = 30;
-                      "FormAuthType" = "Manual";
-                      "IntegrationId" = "00000000-0000-0000-0000-000000000000";
-                      "Version" = "V2";
-                      "CyberArkUseStaticUsername" = $true;
-                      "IsReplacedCredentials" = $false;
-                      "Index" = 0
+                      Pattern = 'Signin required'
+                      Regex = $true
                   }
               )
-              "PersonasValidation" = $true
-              "AuthorizationTokenRules" = @()
+              LogoutKeywordPatternsValue = '[{"Pattern":"Signin required","Regex":true}]'
+              LogoutRedirectPattern = 'http://example.com/Default.php?ref=*'
+              OverrideTargetUrl = $false
+              Personas = @(
+                  @{
+                      IsActive = $true
+                      Password = 'pass'
+                      UserName = 'user'
+                      OtpType = 'Totp'
+                      SecretKey = ''
+                      Digit = 6
+                      Period = 30
+                      Algorithm = 'Sha1'
+                      FormAuthType = 'Manual'
+                      IntegrationId = '00000000-0000-0000-0000-000000000000'
+                      Version = 'V2'
+                      UseStaticUsername = $true
+                      CyberArkUseStaticUsername = $true
+                      AzureUseStaticUsername = $true
+                      IsReplacedCredentials = $false
+                      Index = 0
+                  }
+              )
           }
-          "AuthenticationProfileOption" = "DontUse"
-          "ImportedLinks" = @("/foo1", "/foo2")
-          "IsMaxScanDurationEnabled" = $false
-          "MaxDynamicSignatures" = 60
-          "MaxScanDuration" = 48
-          "Scope" = "EnteredPathAndBelow"
-          "SubPathMaxDynamicSignatures" = 30
-          "UrlRewriteAnalyzableExtensions" = "htm,html"
-          "UrlRewriteBlockSeparators" = "/$.,;|:"
-          "UrlRewriteMode" = "Custom"
-          "UrlRewriteRules" = @(
-              @{
-                  "PlaceholderPattern" = "/blog/{category}/{title}"
-              }
-          )
-          "PreRequestScriptSetting" = @{
-              "IsEnabled" = $false
-          }
-          "DoNotDifferentiateProtocols" = $true
-          "OAuth2SettingModel" = @{
-              "FlowType" = "Custom"
-              "AuthenticationType" = "
+          AuthenticationProfileOption = 'DontUse'
+          ImportedLinks = @('/foo1', '/foo2')
+          IsMaxScanDurationEnabled = $false
+          MaxDynamicSignatures = 60
+          MaxScanDuration = 48
+          Scope = 'EnteredPathAndBelow'
+          SubPathMaxDynamicSignatures = 30
+      } | ConvertTo-Json
+      
+      Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body $body
 - task: netsparker-cloud@1
   inputs:
     apiConnection: 'azuredevopstest'
