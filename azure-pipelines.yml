@@ -294,6 +294,28 @@ steps:
       # Your PowerShell script here to read the environment variable
       $ver = '$(my.ver)'
       Write-Host "ID from variable: $ver"
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      # Define the URL and headers
+      $url = 'https://www.netsparkercloud.com/api/1.0/scans/cancel'
+      $headers = @{
+          'Content-Type' = 'application/json'
+          'Accept'       = 'application/json'
+          'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
+      }
+      
+      # Define the data to be sent in the request body
+      $data = @{
+          Id = '$(my.ver)'
+      } | ConvertTo-Json
+      
+      # Send the HTTP request
+      $response = Invoke-RestMethod -Uri $url -Method Post -Headers $headers -Body $data
+      
+      # Display the response
+      $response
 - task: netsparker-cloud@1
   inputs:
     apiConnection: 'azuredevopstest'
