@@ -157,7 +157,7 @@ steps:
       Write-Host "Response Content: $jsonResponse"
       
       # Convert JSON response to PowerShell object
-      $responseObject = $jsonResponse | ConvertFrom-Json
+      $responseObject = $jsonResponse 
             
       # Extract the 'Id' parameter value
       $idValue = $responseObject.Id
