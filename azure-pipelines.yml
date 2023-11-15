@@ -185,7 +185,7 @@ steps:
       
       # Define the data to be sent in the request body
       $data = @{
-          Id = $ver
+          Id = "$ver"
       } 
       
       # Send the HTTP request
