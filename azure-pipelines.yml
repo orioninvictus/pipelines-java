@@ -186,7 +186,7 @@ steps:
       # Define the data to be sent in the request body
       $data = @{
           Id = "$ver"
-      } 
+      } | ConvertTo-Json
       # Debug: Output the request data
       Write-Host "Request Data: $data"
       
