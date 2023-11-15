@@ -150,12 +150,11 @@ steps:
           TargetUri = "http://example8.com/"
       } | ConvertTo-Json
       
-      $response = Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body $body
-      # Display the response
-      $response
+      $jsonResponse = Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body $body -ErrorAction Stop
       Start-Sleep -Seconds 10
+      
       # Convert JSON response to PowerShell object
-      $responseObject = $response | ConvertFrom-Json
+      $responseObject = $jsonResponse | ConvertFrom-Json
             
       # Extract the 'Id' parameter value
       $idValue = $responseObject.Id
@@ -165,6 +164,7 @@ steps:
       # Your PowerShell script here to read the environment variable
       $ver = '$(my.ver)'
       Write-Host "ID from variable: $ver"
+
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
