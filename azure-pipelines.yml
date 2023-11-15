@@ -185,7 +185,7 @@ steps:
       
       # Define the data to be sent in the request body
       $data = @{
-          Id = $ver
+          Id = $env:MY_VER
       } | ConvertTo-Json
       # Debug: Output the request data
       Write-Host "Request Data: $data"
@@ -199,10 +199,7 @@ steps:
       } catch {
           Write-Host "Error: $_"
           throw
-      }
-      # Send the HTTP request
-      $response = Invoke-RestMethod -Uri $url -Method Post -Headers $headers -Body $data
-      
+      }      
       # Display the response
       $response
 - task: netsparker-cloud@1
