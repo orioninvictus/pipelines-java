@@ -186,7 +186,7 @@ steps:
       # Define the data to be sent in the request body
       $data = @{
           Id = $ver
-      } | ConvertTo-Json
+      } 
       
       # Send the HTTP request
       $response = Invoke-RestMethod -Uri $url -Method Post -Headers $headers -Body $data
