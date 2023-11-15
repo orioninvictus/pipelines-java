@@ -166,7 +166,7 @@ steps:
       Write-Host "##vso[task.setvariable variable=my.ver]$idValue"
       # Your PowerShell script here to read the environment variable
       $ver = '$(my.ver)'
-      Write-Host "ID from variable: $ver"
+      Write-Host "ID from variable: $ver
 
 
 - task: PowerShell@2
