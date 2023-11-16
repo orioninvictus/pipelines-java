@@ -171,7 +171,6 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      # Define the URL and headers
       $uri = 'https://www.netsparkercloud.com/api/1.0/scans/cancel'
       $headers = @{
           'Content-Type'   = 'application/json'
@@ -179,8 +178,8 @@ steps:
           'Authorization'  = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
       }
       
-      
-          $jsonResponse = Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body "$ver" -ErrorAction Stop      
+      # Use the $ver directly without converting to JSON
+      $jsonResponse = Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body "$ver" -ErrorAction Stop
 - task: netsparker-cloud@1
   inputs:
     apiConnection: 'azuredevopstest'
