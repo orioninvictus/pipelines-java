@@ -193,7 +193,7 @@ steps:
       
       # Send the HTTP request
       try {
-          Write-Host "Sending request to $url with data: $($data | ConvertTo-Json -Depth 10)"
+          Write-Host "Sending request to $url with data: `"$data`""
           $response = Invoke-RestMethod -Uri $url -Method Post -Headers $headers -Body $data
       
           # Debug: Output the response
