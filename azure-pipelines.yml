@@ -189,7 +189,7 @@ steps:
       
       
       # Debug: Output the request data
-      Write-Host "Request Data: $Id | ConvertTo-Json -Depth 10)"
+      Write-Host "Request Data: $data"
       
       # Send the HTTP request
       try {
