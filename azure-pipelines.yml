@@ -181,10 +181,10 @@ steps:
       
       Write-Host "Sending request to $uri with data: `"$ver`""
       # Debugging with Echo
-      $ver = '4fe273d547694fc77680b0bc02a5c5dd'  # Replace with the actual 'Id' value
+      $ver = '38395cbe09234892cf0fb0bc02b67130'
       Write-Host "Sending request to $uri with data: `"$ver`""
       try {
-          $jsonResponse = Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body "$ver" -ErrorAction Stop
+          $jsonResponse = Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body "$ver" -ContentType 'application/json' -ErrorAction Stop
           Write-Host "Response Content: $jsonResponse"
       } catch {
           Write-Host "Error: $_"
