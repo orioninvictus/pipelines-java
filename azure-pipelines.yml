@@ -171,8 +171,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      Start-Sleep -Seconds 20
-      # Update the script to send the 'Id' as a raw string
+      # Update the script with more debugging statements
       $uri = 'https://www.netsparkercloud.com/api/1.0/scans/cancel'
       $headers = @{
           'Content-Type'   = 'application/json'
@@ -180,11 +179,18 @@ steps:
           'Authorization'  = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
       }
       
-      # Use the $ver directly without converting to JSON
-      $jsonResponse = Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body "$ver" -ErrorAction Stop
+      Write-Host "Sending request to $uri with data: `"$ver`""
       
-      # Output the content of the response
-      Write-Host "Response Content: $jsonResponse"
+      # Use the $ver directly without converting to JSON
+      try {
+          $jsonResponse = Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body "$ver" -ErrorAction Stop
+      
+          # Output the content of the response
+          Write-Host "Response Content: $jsonResponse"
+      } catch {
+          Write-Host "Error: $_"
+          throw
+      }
 - task: netsparker-cloud@1
   inputs:
     apiConnection: 'azuredevopstest'
