@@ -138,44 +138,6 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      $uri = 'https://www.netsparkercloud.com/api/1.0/scans/newwithprofile'
-      $headers = @{
-          'Content-Type' = 'application/json'
-          'Accept' = 'application/json'
-          'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
-      }
-      
-      $body = @{
-          ProfileName = "edenred_example_3"
-          TargetUri = "http://example8.com/"
-      } | ConvertTo-Json
-      
-      $jsonResponse = Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body $body -ErrorAction Stop
-      Start-Sleep -Seconds 10
-      
-      # Output the content of the response
-      Write-Host "Response Content: $jsonResponse"
-      
-      # Convert JSON response to PowerShell object
-      $responseObject = $jsonResponse 
-            
-      # Extract the 'Id' parameter value
-      $idValue = $responseObject.Id
-            
-      # Set the environment variable for Azure DevOps
-      Write-Host "##vso[task.setvariable variable=my.ver]$idValue"
-      # Your PowerShell script here to read the environment variable
-      $ver = '$(my.ver)'
-      Write-Host "ID from variable: $ver"
-
-
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      Start-Sleep -Seconds 20
-      Write-Host "The value of 'ver' is: $(my.ver)"
-      
       # Define the URL and headers
       $url = 'https://www.netsparkercloud.com/api/1.0/scans/cancel'
       $headers = @{
@@ -184,13 +146,16 @@ steps:
           'Authorization'  = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
       }
       
+      # Convert the $ver variable to a string
+      $ver = $ver.ToString()
+      
       # Define the data to be sent in the request body
       $data = @{
           Id = $ver
       } | ConvertTo-Json
       
       # Debug: Output the request data
-      Write-Host "Sending request to $url with data: `"$data`""
+      Write-Host "Request Data: $data"
       
       # Send the HTTP request
       try {
@@ -200,7 +165,6 @@ steps:
           Write-Host "Response Content: $response"
       } catch {
           Write-Host "Error: $_"
-          Write-Host "Request Data: $($data | ConvertTo-Json -Depth 10)"
           throw
       }
 - task: netsparker-cloud@1
