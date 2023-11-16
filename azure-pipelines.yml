@@ -180,10 +180,9 @@ steps:
       }
       
       Write-Host "Sending request to $uri with data: `"$ver`""
-      
-
-      # Use the $ver directly without converting to JSON
+      # Debugging with Echo
       $ver = '4fe273d547694fc77680b0bc02a5c5dd'  # Replace with the actual 'Id' value
+      Write-Host "Sending request to $uri with data: `"$ver`""
       try {
           $jsonResponse = Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body "$ver" -ErrorAction Stop
           Write-Host "Response Content: $jsonResponse"
