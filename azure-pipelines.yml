@@ -185,7 +185,9 @@ steps:
       }
       
       # Define the data to be sent in the request body
-      $data = @{$env:MY_VER} | ConvertTo-Json
+      $data = @{
+          Id = $ver
+      } | ConvertTo-Json
       
       # Debug: Output the request data
       Write-Host "Sending request to $url with data: `"$data`""
