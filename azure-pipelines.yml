@@ -12,7 +12,7 @@ steps:
       $headers = @{
           'Content-Type' = 'application/json'
           'Accept' = 'application/json'
-          'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
+          'Authorization' = "Basic $([System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($env:USERID +':'+$env:APITOKEN)))"
       }
       
       $body = @{
@@ -42,7 +42,7 @@ steps:
       $headers = @{
           'Content-Type' = 'application/json'
           'Accept' = 'application/json'
-          'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
+          'Authorization' = "Basic $([System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($env:USERID +':'+$env:APITOKEN)))"
       }
       
       $body = @{
@@ -142,7 +142,7 @@ steps:
             $headers = @{
                 'Content-Type' = 'application/json'
                 'Accept' = 'application/json'
-                'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
+                'Authorization' = "Basic $([System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($env:USERID +':'+$env:APITOKEN)))"
             }
             
             $body = @{
@@ -176,7 +176,7 @@ steps:
       $headers = @{
           'Content-Type'   = 'application/json'
           'Accept'         = 'application/json'
-          'Authorization'  = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
+          'Authorization' = "Basic $([System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($env:USERID +':'+$env:APITOKEN)))"
       }
       
       # Get the 'Id' value from the environment variable
@@ -206,7 +206,7 @@ steps:
       $url = "https://www.netsparkercloud.com/api/1.0/scans/detail/$ver"
       $headers = @{
           'Accept'        = 'application/json'
-          'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
+          'Authorization' = "Basic $([System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($env:USERID +':'+$env:APITOKEN)))"
       }
       
       # Send the HTTP GET request
@@ -243,7 +243,7 @@ steps:
       $headers = @{
           'Content-Type'  = 'application/json'
           'Accept'        = 'application/json'
-          'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
+          'Authorization' = "Basic $([System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($env:USERID +':'+$env:APITOKEN)))"
       }
       
       # Create the JSON body with the dynamic 'ScanTaskGroupId' value
