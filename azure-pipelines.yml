@@ -199,8 +199,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      # Get the 'scanTaskGroupId' value from the environment variable
-      $scanTaskGroupId = '$(my.scanTaskGroupId)'
+      # Get the 'my.ver' value from the environment variable
       $ver = '$(my.ver)'
       
       # Define the URL and headers for the new request
@@ -210,22 +209,14 @@ steps:
           'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
       }
       
-      # Initialize variables for extracted values
-      $websiteId = $null
-      $scanTaskProfileId = $null
-      $scanTaskGroupId = $null
-      
       # Send the HTTP GET request
       try {
           $response = Invoke-RestMethod -Uri $url -Method Get -Headers $headers
       
-          # Convert JSON response to PowerShell object
-          $responseObject = $response | ConvertFrom-Json
-      
-          # Extract values from the response
-          $websiteId = $responseObject.WebsiteId
-          $scanTaskProfileId = $responseObject.ScanTaskProfile.Id
-          $scanTaskGroupId = $responseObject.ScanTaskGroupId
+          # Extract the values from the response
+          $websiteId = $response.WebsiteId
+          $scanTaskProfileId = $response.ScanTaskProfile.Id
+          $scanTaskGroupId = $response.ScanTaskGroupId
       
           # Set the environment variables for Azure DevOps
           Write-Host "##vso[task.setvariable variable=my.websiteId]$websiteId"
@@ -238,9 +229,7 @@ steps:
           Write-Host "ScanTaskGroupId: $scanTaskGroupId"
       } catch {
           Write-Host "Error: $_"
-          throw $_  # Rethrow the exception to fail the task
       }
-- task: PowerShell@2
   inputs:
     targetType: 'inline'
     script: |
