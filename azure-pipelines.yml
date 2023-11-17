@@ -171,16 +171,16 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      # Define the 'Id' value
-      $idValue = '38395cbe09234892cf0fb0bc02b67130'
-      
-      # Define the URL and headers
+      # Define the URL and headers for cancellation
       $url = 'https://www.netsparkercloud.com/api/1.0/scans/cancel'
       $headers = @{
           'Content-Type'   = 'application/json'
           'Accept'         = 'application/json'
           'Authorization'  = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
       }
+      
+      # Get the 'Id' value from the environment variable
+      $idValue = $env:MY_VER
       
       # Debug: Output the request data
       Write-Host "Sending request to $url with data: `"$idValue`""
