@@ -221,6 +221,57 @@ steps:
       } catch {
           Write-Host "Error: $_"
       }
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      # Get the 'ScanTaskGroupId' value from the environment variable
+      $scanTaskGroupId = '$(my.ver)'
+      
+      # Define the URL and headers for the new request
+      $url = "https://www.netsparkercloud.com/api/1.0/notifications/new"
+      $headers = @{
+          'Content-Type'  = 'application/json'
+          'Accept'        = 'application/json'
+          'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
+      }
+      
+      # Create the JSON body with the dynamic 'ScanTaskGroupId' value
+      $body = @{
+          Recipients = @{
+              Integrations            = @("Azure Boards Test Orion2")
+              SpecificEmailRecipients = @("WebsiteTechnicalContact", "PersonWhoStartedScan")
+              SpecificSmsRecipients   = @("PersonWhoStartedScan")
+          }
+          WebsiteRootUrl = "http://example8.com/"
+          EmailSmsFilter = @{
+              IsConfirmed = $false
+              Severity    = "Critical"
+              State       = "NotFound"
+              Certainty   = 0
+          }
+          IntegrationFilter = @{
+              IsConfirmed = $false
+              Severity    = "Low"
+              State       = "NotFound"
+              Certainty   = 0
+          }
+          Disabled         = $false
+          ScanTaskGroupId  = $scanTaskGroupId  # Use the dynamic value obtained earlier
+          Event            = "ScanCompleted"
+          Name             = "Team 2 Edenred"
+          Scope            = "Website"
+      } | ConvertTo-Json
+      
+      # Send the HTTP POST request
+      try {
+          $response = Invoke-RestMethod -Uri $url -Method Post -Headers $headers -Body $body
+      
+          # Output the response
+          Write-Host "Response Content: $response"
+      } catch {
+          Write-Host "Error: $_"
+      }
 - task: netsparker-cloud@1
   inputs:
     apiConnection: 'azuredevopstest'
