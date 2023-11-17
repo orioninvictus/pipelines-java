@@ -285,6 +285,7 @@ steps:
   inputs:
     $scanTaskProfileId = '$(my.scanTaskProfileId)'
     $websiteId = '$(my.websiteId)'
+    
     apiConnection: 'azuredevopstest'
     scanTypes: '2'
     scanWebSites: '$websiteId'
