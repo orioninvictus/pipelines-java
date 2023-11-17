@@ -195,6 +195,32 @@ steps:
           Write-Host "Error: $_"
           throw
       }
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      # Get the 'my.ver' value from the environment variable
+      $ver = '$(my.ver)'
+      
+      # Define the URL and headers for the new request
+      $url = "https://www.netsparkercloud.com/api/1.0/scans/detail/$ver"
+      $headers = @{
+          'Accept'        = 'application/json'
+          'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
+      }
+      
+      # Send the HTTP GET request
+      try {
+          $response = Invoke-RestMethod -Uri $url -Method Get -Headers $headers
+      
+          # Extract the 'ScanTaskGroupId' parameter value
+          $scanTaskGroupId = $response.ScanTaskGroupId
+      
+          # Output the extracted value
+          Write-Host "ScanTaskGroupId: $scanTaskGroupId"
+      } catch {
+          Write-Host "Error: $_"
+      }
 - task: netsparker-cloud@1
   inputs:
     apiConnection: 'azuredevopstest'
