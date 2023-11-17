@@ -213,10 +213,20 @@ steps:
       try {
           $response = Invoke-RestMethod -Uri $url -Method Get -Headers $headers
       
-          # Extract the 'ScanTaskGroupId' parameter value
-          $scanTaskGroupId = $response.ScanTaskGroupId
+          # Convert JSON response to PowerShell object
+          $responseObject = $jsonResponse | ConvertFrom-Json
       
-          # Output the extracted value
+          # Extract values from the response
+          $websiteId = $responseObject.WebsiteId
+          $scanTaskProfileId = $responseObject.ScanTaskProfile.Id
+          $scanTaskGroupId = $responseObject.ScanTaskGroupId
+          # Set the environment variables for Azure DevOps
+          Write-Host "##vso[task.setvariable variable=my.websiteId]$websiteId"
+          Write-Host "##vso[task.setvariable variable=my.scanTaskProfileId]$scanTaskProfileId"
+          Write-Host "##vso[task.setvariable variable=my.scanTaskGroupId]$scanTaskGroupId"
+          # Output the extracted values
+          Write-Host "WebsiteId: $websiteId"
+          Write-Host "ScanTaskProfileId: $scanTaskProfileId"
           Write-Host "ScanTaskGroupId: $scanTaskGroupId"
       } catch {
           Write-Host "Error: $_"
@@ -226,7 +236,7 @@ steps:
     targetType: 'inline'
     script: |
       # Get the 'ScanTaskGroupId' value from the environment variable
-      $scanTaskGroupId = '$(my.ver)'
+      $scanTaskGroupId = '$(my.scanTaskGroupId)'
       
       # Define the URL and headers for the new request
       $url = "https://www.netsparkercloud.com/api/1.0/notifications/new"
@@ -257,7 +267,7 @@ steps:
               Certainty   = 0
           }
           Disabled         = $false
-          ScanTaskGroupId  = "$scanTaskGroupId"  # Use the dynamic value obtained earlier
+          ScanTaskGroupId  = $scanTaskGroupId  # Use the dynamic value obtained earlier
           Event            = "ScanCompleted"
           Name             = "Team 2 Edenred"
           Scope            = "Website"
