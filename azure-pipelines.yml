@@ -257,7 +257,7 @@ steps:
               Certainty   = 0
           }
           Disabled         = $false
-          ScanTaskGroupId  = $scanTaskGroupId  # Use the dynamic value obtained earlier
+          ScanTaskGroupId  = "$scanTaskGroupId"  # Use the dynamic value obtained earlier
           Event            = "ScanCompleted"
           Name             = "Team 2 Edenred"
           Scope            = "Website"
