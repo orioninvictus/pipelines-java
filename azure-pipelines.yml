@@ -201,9 +201,10 @@ steps:
     script: |
       # Get the 'scanTaskGroupId' value from the environment variable
       $scanTaskGroupId = '$(my.scanTaskGroupId)'
+      $ver = '$(my.ver)'
       
       # Define the URL and headers for the new request
-      $url = "https://www.netsparkercloud.com/api/1.0/scans/detail/$scanTaskGroupId"
+      $url = "https://www.netsparkercloud.com/api/1.0/scans/detail/$ver"
       $headers = @{
           'Accept'        = 'application/json'
           'Authorization' = 'Basic YmRiM2U2ZTQyZThkNGNkNTNmZjhhZTU4MDFmZWMyMDg6ZklUKzZIS01PM29pbzBRYklVWWJpM0dMcTNEVEhQdjQvRnJUWnQ0Mzh6WT0='
