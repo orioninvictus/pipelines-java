@@ -234,6 +234,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
+      Start-Sleep -Seconds 10
       # Get the 'ScanTaskGroupId' value from the environment variable
       $scanTaskGroupId = '$(my.scanTaskGroupId)'
       
@@ -285,6 +286,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
+      Start-Sleep -Seconds 10
       # Define the URL and headers for the new request
       $url = 'https://www.netsparkercloud.com/api/1.0/scans/CreateFromPluginScanRequest'
       $headers = @{
