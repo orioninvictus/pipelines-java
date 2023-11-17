@@ -344,7 +344,7 @@ steps:
             
             # Send the HTTP request
             try {
-                $response = Invoke-RestMethod -Uri $url -Method Post -Headers $headers -Body "`"$idValue`"" -ErrorAction Stop
+                $response = Invoke-RestMethod -Uri $url -Method Post -Headers $headers -Body "[`"$idValue`"]" -ErrorAction Stop
             
                 # Debug: Output the response
                 Write-Host "Response Content: $response"
