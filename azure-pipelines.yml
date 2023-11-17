@@ -174,14 +174,6 @@ steps:
       # Define the 'Id' value
       $idValue = '38395cbe09234892cf0fb0bc02b67130'
       
-      # Create a hashtable with the 'Id' field
-      $requestData = @{
-          Id = $idValue
-      }
-      
-      # Convert the hashtable to JSON
-      $jsonData = $requestData | ConvertTo-Json
-      
       # Define the URL and headers
       $url = 'https://www.netsparkercloud.com/api/1.0/scans/cancel'
       $headers = @{
@@ -191,11 +183,11 @@ steps:
       }
       
       # Debug: Output the request data
-      Write-Host "Sending request to $url with data: `"$jsonData`""
+      Write-Host "Sending request to $url with data: `"$idValue`""
       
       # Send the HTTP request
       try {
-          $response = Invoke-RestMethod -Uri $url -Method Post -Headers $headers -Body $jsonData -ErrorAction Stop
+          $response = Invoke-RestMethod -Uri $url -Method Post -Headers $headers -Body "`"$idValue`"" -ErrorAction Stop
       
           # Debug: Output the response
           Write-Host "Response Content: $response"
