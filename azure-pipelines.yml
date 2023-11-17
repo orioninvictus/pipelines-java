@@ -283,7 +283,9 @@ steps:
       }
 - task: netsparker-cloud@1
   inputs:
+    $scanTaskProfileId = '$(my.scanTaskProfileId)'
+    $websiteId = '$(my.websiteId)'
     apiConnection: 'azuredevopstest'
     scanTypes: '2'
-    scanWebSites: '7ce8c8ea-cbcc-46bd-2e18-b01a0266716d'
-    scanWebSitesProfile: 'eae4fab5-2910-4567-2772-b01a02708950'
+    scanWebSites: '$websiteId'
+    scanWebSitesProfile: '$scanTaskProfileId'
