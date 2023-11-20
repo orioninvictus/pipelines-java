@@ -63,6 +63,8 @@ steps:
           IsPrimary = $true
           IsShared = $true
           IsTimeWindowEnabled = $false
+          #Add Profile Name
+          #Add Target URI, FQDN should be same as Root URL above, additional path can be added e.g. http://example4.com/test/
           ProfileName = 'edenred_example_4'
           TargetUri = 'http://example4.com/'
           # Example BasicAuthenticationApiModel = @{
@@ -111,8 +113,16 @@ steps:
           ExcludeLinks = $true
           ExcludeAuthenticationPages = $true
           FindAndFollowNewLinks = $true
+          # Input LoginFormUrl
+          # LoginFormUrl = 'http://example.com/login.php'
+          # Change IsEnabled to $true
+          # Add Persona (Username and Password)
           FormAuthenticationSettingModel = @{
               Integrations = @{}
+          #Custom Script Example: "CustomScripts": [
+          #{
+          #"Value": "netsparker.auth.setValueByQuery('#contentCenterMenu_login_C_S_R_F_inLoginDetected_Email', username);\r\nnetsparker.auth.setValueByQuery('#contentCenterMenu_login_C_S_R_F_inLoginDetected_Password', password);\r\nnetsparker.auth.clickByQuery('#contentCenterMenu_login_C_S_R_F_inLoginDetected_Button1');"
+          #}
               CustomScripts = @()
               InteractiveLoginRequired = $false
               DefaultPersonaValidation = $false
@@ -120,8 +130,8 @@ steps:
               DisableLogoutDetection = $false
               IsEnabled = $false
               IsNotVerified = $false
-              LoginFormUrl = 'http://example.com/login.php'
-              LoginRequiredUrl = 'http://example.com/admin.php'
+              LoginFormUrl = ''
+              LoginRequiredUrl = ''
               LogoutKeywordPatterns = @(
                   @{
                       Pattern = 'Signin required'
@@ -129,13 +139,14 @@ steps:
                   }
               )
               LogoutKeywordPatternsValue = '[{"Pattern":"Signin required","Regex":true}]'
-              LogoutRedirectPattern = 'http://example.com/Default.php?ref=*'
+              #Example : LogoutRedirectPattern = 'http://example.com/Default.php?ref=*'
+              LogoutRedirectPattern = ''
               OverrideTargetUrl = $false
               Personas = @(
                   @{
                       IsActive = $true
-                      Password = 'passadas'
-                      UserName = 'userwrere'
+                      Password = ''
+                      UserName = ''
                       OtpType = 'Totp'
                       SecretKey = ''
                       Digit = 6
@@ -153,7 +164,9 @@ steps:
               )
           }
           AuthenticationProfileOption = 'DontUse'
-          ImportedLinks = @('/foo1', '/foo2')
+          #Add API endpoints
+          #Example: ImportedLinks = @('/foo1', '/foo2')
+          ImportedLinks = @()
           IsMaxScanDurationEnabled = $false
           MaxDynamicSignatures = 60
           MaxScanDuration = 48
@@ -163,6 +176,7 @@ steps:
       
       Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body $body
 - task: PowerShell@2
+# Starts the temporary scan with given profile (This scan is run just to create and gather necessary parameter values for upcoming tasks)
   inputs:
     targetType: 'inline'
     script: |
@@ -174,6 +188,8 @@ steps:
             }
             
             $body = @{
+            # Add Profile Name
+            # Add the Target URI, same as the target Website above
                 ProfileName = "edenred_example_3"
                 TargetUri = "http://example8.com/"
             } | ConvertTo-Json
@@ -261,6 +277,7 @@ steps:
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
+    # This task creates the notification
     script: |
       Start-Sleep -Seconds 10
       # Get the 'ScanTaskGroupId' value from the environment variable
@@ -277,6 +294,7 @@ steps:
       # Create the JSON body with the dynamic 'ScanTaskGroupId' value
       $body = @{
           Recipients = @{
+              # Use the name of related integration that is shown in Invicti Enterprise dashboard
               Integrations            = @("Azure Boards Test Orion2")
               SpecificEmailRecipients = @("WebsiteTechnicalContact", "PersonWhoStartedScan")
               SpecificSmsRecipients   = @("PersonWhoStartedScan")
