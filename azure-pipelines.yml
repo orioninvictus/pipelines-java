@@ -9,29 +9,35 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      $headers = @{
-          'Content-Type' = 'application/json'
-          'Accept' = 'application/json'
-          'Authorization' = "Basic $([System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($env:USERID +':'+$env:APITOKEN)))"
+      try {
+          $headers = @{
+              'Content-Type' = 'application/json'
+              'Accept' = 'application/json'
+              'Authorization' = "Basic $([System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($env:USERID +':'+$env:APITOKEN)))"
+          }
+      
+          $body = @{
+              "AgentMode" = "Cloud"
+              "RootUrl" = "http://example8.com"
+              "LicenseType" = "Subscription"
+              "Name" = "Blue Fizzz 22222"
+              "Description" = "Sample Description"
+              "Tags" = @("TagWithNoValue", "TagWithValue:Value")
+          }
+      
+          $jsonBody = $body | ConvertTo-Json
+      
+          $url = 'https://www.netsparkercloud.com/api/1.0/websites/new'
+      
+          $response = Invoke-RestMethod -Uri $url -Method Post -Headers $headers -Body $jsonBody
+      
+          # Display the response
+          Write-Output $response
+      } catch {
+          Write-Error "Error: $_"
+          # You can add more handling logic if needed
       }
-      
-      $body = @{
-          "AgentMode" = "Cloud"
-          "RootUrl" = "http://example8.com"
-          "LicenseType" = "Subscription"
-          "Name" = "Blue Fizzz 22222"
-          "Description" = "Sample Description"
-          "Tags" = @("TagWithNoValue", "TagWithValue:Value")
-      }
-      
-      $jsonBody = $body | ConvertTo-Json
-      
-      $url = 'https://www.netsparkercloud.com/api/1.0/websites/new'
-      
-      $response = Invoke-RestMethod -Uri $url -Method Post -Headers $headers -Body $jsonBody
-      
-      # Display the response
-      Write-Output $response
+
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
