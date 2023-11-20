@@ -17,9 +17,9 @@ steps:
 
       $body = @{
           "AgentMode" = "Cloud"
-          "RootUrl" = "http://example8.com"
+          "RootUrl" = "http://example4.com"
           "LicenseType" = "Subscription"
-          "Name" = "Blue Fizzz 22222"
+          "Name" = "Blue Fizzz 3333"
           "Description" = "Sample Description"
           "Tags" = @("TagWithNoValue", "TagWithValue:Value")
       }
@@ -63,20 +63,33 @@ steps:
           IsPrimary = $true
           IsShared = $true
           IsTimeWindowEnabled = $false
-          ProfileName = 'edenred_example_3'
-          TargetUri = 'http://example8.com/'
+          ProfileName = 'edenred_example_4'
+          TargetUri = 'http://example4.com/'
+          # Example BasicAuthenticationApiModel = @{
+              #Credentials = @(
+               #   @{
+               #(Choose one)      AuthenticationType = 'Basic, NTLM, Kerberos, Digest, Negotiate'
+               #  Domain = 'example.com'
+               #       Password = 'pass'
+               #       UriPrefix = 'http://example.com/'
+               #       UserName = 'user'
+               #       IsReplacedCredentials = $false
+               #   }
+               #)
+               #IsEnabled = $true
+               #NoChallenge = $false
           BasicAuthenticationApiModel = @{
               Credentials = @(
                   @{
-                      AuthenticationType = 'Basic'
-                      Domain = 'example.com'
-                      Password = 'pass'
-                      UriPrefix = 'http://example.com/'
-                      UserName = 'user'
+                      AuthenticationType = ''
+                      Domain = ''
+                      Password = ''
+                      UriPrefix = ''
+                      UserName = ''
                       IsReplacedCredentials = $false
                   }
               )
-              IsEnabled = $true
+              IsEnabled = $false
               NoChallenge = $false
           }
           Cookies = 'name1=value1; name2=value2'
