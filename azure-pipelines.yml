@@ -16,12 +16,14 @@ steps:
       }
 
       $body = @{
+          #AgentMode Cloud or Internal (If there is public access to website cloud can be selected, otherwise it should be Internal)
           "AgentMode" = "Cloud"
           "RootUrl" = "http://example4.com"
           "LicenseType" = "Subscription"
           "Name" = "Blue Fizzz 3333"
           "Description" = "Sample Description"
-          "Tags" = @("TagWithNoValue", "TagWithValue:Value")
+          #Example:"Tags" = @("TagWithNoValue", "TagWithValue:Value")
+          "Tags" = @()
       }
 
       $jsonBody = $body | ConvertTo-Json
@@ -113,10 +115,6 @@ steps:
           ExcludeLinks = $true
           ExcludeAuthenticationPages = $true
           FindAndFollowNewLinks = $true
-          # Input LoginFormUrl
-          # LoginFormUrl = 'http://example.com/login.php'
-          # Change IsEnabled to $true
-          # Add Persona (Username and Password)
           FormAuthenticationSettingModel = @{
               Integrations = @{}
           #Custom Script Example: "CustomScripts": [
@@ -128,8 +126,11 @@ steps:
               DefaultPersonaValidation = $false
               DetectBearerToken = $true
               DisableLogoutDetection = $false
+              # Change IsEnabled to $true to activate form authentication
               IsEnabled = $false
               IsNotVerified = $false
+              # Input LoginFormUrl
+              # LoginFormUrl = 'http://example.com/login.php'
               LoginFormUrl = ''
               LoginRequiredUrl = ''
               LogoutKeywordPatterns = @(
@@ -142,6 +143,7 @@ steps:
               #Example : LogoutRedirectPattern = 'http://example.com/Default.php?ref=*'
               LogoutRedirectPattern = ''
               OverrideTargetUrl = $false
+              # Add Persona (Username and Password)
               Personas = @(
                   @{
                       IsActive = $true
@@ -188,7 +190,7 @@ steps:
             }
             
             $body = @{
-            # Add Profile Name
+            # Fill in the Profile Name same as given above
             # Add the Target URI, same as the target Website above
                 ProfileName = "profile_example_4"
                 TargetUri = "http://example4.com/"
