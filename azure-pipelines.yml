@@ -34,9 +34,9 @@ steps:
           # Display the response
           Write-Output $response
       } catch {
-          $errorMessage = $_.Exception.Message
-          if ($errorMessage -match 'A Website with the same name already exists' -or
-              $errorMessage -match 'The URL you entered is already in use') {
+          $errorDetails = $_.ErrorDetails.Message
+          if ($errorDetails -match 'A Website with the same name already exists in your account' -or
+              $errorDetails -match 'The URL you entered is already in use') {
               # Handle the case where the website name or RootUrl already exists
               Write-Host "Website with the same name or URL already exists. Continuing with the next task."
           } else {
