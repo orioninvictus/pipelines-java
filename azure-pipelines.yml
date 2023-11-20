@@ -20,7 +20,7 @@ steps:
               "AgentMode" = "Cloud"
               "RootUrl" = "http://example8.com"
               "LicenseType" = "Subscription"
-              "Name" = "Blue Fizzzz 22222"
+              "Name" = "Blue Fizzz 22222"
               "Description" = "Sample Description"
               "Tags" = @("TagWithNoValue", "TagWithValue:Value")
           }
@@ -36,14 +36,20 @@ steps:
       } catch {
           $errorMessage = $_.Exception.Message
           
-          if ($errorMessage -like '*A Website with the same name already exists in your account.*') {
-              Write-Host "Website with the same name already exists. Continuing with the pipeline..."
+          # Check if the error is a 400 Bad Request
+          if ($_.Exception.Response -ne $null -and $_.Exception.Response.StatusCode -eq 'BadRequest') {
+              # Check if the specific error message indicates a duplicate name issue
+              if ($errorMessage -like '*A Website with the same name already exists in your account.*') {
+                  Write-Output "Website with the same name already exists. Skipping..."
+              } else {
+                  Write-Error "Error: $errorMessage"
+                  throw
+              }
           } else {
               Write-Error "Error: $errorMessage"
               throw
           }
       }
-
 
 - task: PowerShell@2
   inputs:
