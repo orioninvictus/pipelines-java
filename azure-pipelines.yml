@@ -9,41 +9,41 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
+      $headers = @{
+          'Content-Type' = 'application/json'
+          'Accept' = 'application/json'
+          'Authorization' = "Basic $([System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($env:USERID +':'+$env:APITOKEN)))"
+      }
+
+      $body = @{
+          "AgentMode" = "Cloud"
+          "RootUrl" = "http://example8.com"
+          "LicenseType" = "Subscription"
+          "Name" = "Blue Fizzz 22222"
+          "Description" = "Sample Description"
+          "Tags" = @("TagWithNoValue", "TagWithValue:Value")
+      }
+
+      $jsonBody = $body | ConvertTo-Json
+
+      $url = 'https://www.netsparkercloud.com/api/1.0/websites/new'
+
       try {
-          $headers = @{
-              'Content-Type' = 'application/json'
-              'Accept' = 'application/json'
-              'Authorization' = "Basic $([System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($env:USERID +':'+$env:APITOKEN)))"
-          }
-      
-          $body = @{
-              "AgentMode" = "Cloud"
-              "RootUrl" = "http://example8.com"
-              "LicenseType" = "Subscription"
-              "Name" = "Blue Fizzz 22222"
-              "Description" = "Sample Description"
-              "Tags" = @("TagWithNoValue", "TagWithValue:Value")
-          }
-      
-          $jsonBody = $body | ConvertTo-Json
-      
-          $url = 'https://www.netsparkercloud.com/api/1.0/websites/new'
-      
-          $response = Invoke-RestMethod -Uri $url -Method Post -Headers $headers -Body $jsonBody
-      
+          $response = Invoke-RestMethod -Uri $url -Method Post -Headers $headers -Body $jsonBody -ErrorAction Stop
+
           # Display the response
           Write-Output $response
       } catch {
           $errorMessage = $_.Exception.Message
-          if ($errorMessage -like '*The request is invalid.*model.Name*already exists*') {
-              # Handle the case where the website name already exists
-              Write-Host "Website with the same name already exists. Continuing with the next task."
+          if ($errorMessage -match 'A Website with the same name already exists' -or
+              $errorMessage -match 'The URL you entered is already in use') {
+              # Handle the case where the website name or RootUrl already exists
+              Write-Host "Website with the same name or URL already exists. Continuing with the next task."
           } else {
               # Re-throw the exception for other errors
               throw
           }
       }
-
 
 - task: PowerShell@2
   inputs:
