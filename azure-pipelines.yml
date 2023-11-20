@@ -106,7 +106,7 @@ steps:
                   Url = 'UA-XXXXX-Y'
               }
           )
-          DisallowedHttpMethods = @(PUT; PATCH; DELETE)
+          DisallowedHttpMethods = @{PUT; PATCH; DELETE}
           ExcludeLinks = $true
           ExcludeAuthenticationPages = $true
           FindAndFollowNewLinks = $true
