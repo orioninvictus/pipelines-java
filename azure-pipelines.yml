@@ -34,9 +34,16 @@ steps:
           # Display the response
           Write-Output $response
       } catch {
-          Write-Error "Error: $_"
-          # You can add more handling logic if needed
+          $errorMessage = $_.Exception.Message
+          
+          if ($errorMessage -like '*A Website with the same name already exists in your account.*') {
+              Write-Host "Website with the same name already exists. Continuing with the pipeline..."
+          } else {
+              Write-Error "Error: $errorMessage"
+              throw
+          }
       }
+
 
 - task: PowerShell@2
   inputs:
