@@ -92,7 +92,8 @@ steps:
               IsEnabled = $false
               NoChallenge = $false
           }
-          Cookies = 'name1=value1; name2=value2'
+          #Cookies = 'name1=value1; name2=value2'
+          Cookies = ''
           CrawlAndAttack = $true
           EnableHeuristicChecksInCustomUrlRewrite = $true
           ExcludedLinks = @(
@@ -105,7 +106,7 @@ steps:
                   Url = 'UA-XXXXX-Y'
               }
           )
-          DisallowedHttpMethods = @()
+          DisallowedHttpMethods = @(PUT; PATCH; DELETE)
           ExcludeLinks = $true
           ExcludeAuthenticationPages = $true
           FindAndFollowNewLinks = $true
