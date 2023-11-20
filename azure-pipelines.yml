@@ -65,7 +65,7 @@ steps:
           IsTimeWindowEnabled = $false
           #Add Profile Name
           #Add Target URI, FQDN should be same as Root URL above, additional path can be added e.g. http://example4.com/test/
-          ProfileName = 'edenred_example_4'
+          ProfileName = 'profile_example_4'
           TargetUri = 'http://example4.com/'
           # Example BasicAuthenticationApiModel = @{
               #Credentials = @(
@@ -190,8 +190,8 @@ steps:
             $body = @{
             # Add Profile Name
             # Add the Target URI, same as the target Website above
-                ProfileName = "edenred_example_3"
-                TargetUri = "http://example8.com/"
+                ProfileName = "profile_example_4"
+                TargetUri = "http://example4.com/"
             } | ConvertTo-Json
             
             $jsonResponse = Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body $body -ErrorAction Stop
@@ -299,6 +299,8 @@ steps:
               SpecificEmailRecipients = @("WebsiteTechnicalContact", "PersonWhoStartedScan")
               SpecificSmsRecipients   = @("PersonWhoStartedScan")
           }
+          #Add RootURL 
+          #Select minimum severity for email notification
           WebsiteRootUrl = "http://example4.com/"
           EmailSmsFilter = @{
               IsConfirmed = $false
@@ -306,6 +308,7 @@ steps:
               State       = "NotFound"
               Certainty   = 0
           }
+          #Select minimum severity level, state, certainty and confirmed status for integration endpoint(azure boards) notification
           IntegrationFilter = @{
               IsConfirmed = $false
               Severity    = "Low"
@@ -315,7 +318,8 @@ steps:
           Disabled         = $false
           ScanTaskGroupId  = $scanTaskGroupId  # Use the dynamic value obtained earlier
           Event            = "ScanCompleted"
-          Name             = "Team 2 Edenred"
+          #Add Name
+          Name             = "Team 2 Example"
           Scope            = "Website"
       } | ConvertTo-Json
       
@@ -330,6 +334,7 @@ steps:
       }
 - task: PowerShell@2
   inputs:
+  #Starts plugin initiated scan
     targetType: 'inline'
     script: |
       Start-Sleep -Seconds 10
@@ -355,6 +360,7 @@ steps:
               CiBuildId               = $env:BUILD_BUILDID
               CiBuildUrl              = $env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI
               Committer               = $env:BUILD_REQUESTEDFOR
+              #IntegrationSystem : Name of the Invicti plugin that is added to Azure Enterprise apps
               IntegrationSystem       = 'AzureDevOps'
               VcsName                 = $env:BUILD_REPOSITORY_PROVIDER
               VcsVersion              = $env:BUILD_SOURCEVERSION
