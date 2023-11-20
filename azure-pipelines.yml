@@ -35,21 +35,15 @@ steps:
           Write-Output $response
       } catch {
           $errorMessage = $_.Exception.Message
-          
-          # Check if the error is a 400 Bad Request
-          if ($_.Exception.Response -ne $null -and $_.Exception.Response.StatusCode -eq 'BadRequest') {
-              # Check if the specific error message indicates a duplicate name issue
-              if ($errorMessage -like '*A Website with the same name already exists in your account.*') {
-                  Write-Output "Website with the same name already exists. Skipping..."
-              } else {
-                  Write-Error "Error: $errorMessage"
-                  throw
-              }
+          if ($errorMessage -like '*The request is invalid.*model.Name*already exists*') {
+              # Handle the case where the website name already exists
+              Write-Host "Website with the same name already exists. Continuing with the next task."
           } else {
-              Write-Error "Error: $errorMessage"
+              # Re-throw the exception for other errors
               throw
           }
       }
+
 
 - task: PowerShell@2
   inputs:
