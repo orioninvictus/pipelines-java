@@ -280,7 +280,7 @@ steps:
               SpecificEmailRecipients = @("WebsiteTechnicalContact", "PersonWhoStartedScan")
               SpecificSmsRecipients   = @("PersonWhoStartedScan")
           }
-          WebsiteRootUrl = "http://example8.com/"
+          WebsiteRootUrl = "http://example4.com/"
           EmailSmsFilter = @{
               IsConfirmed = $false
               Severity    = "Critical"
