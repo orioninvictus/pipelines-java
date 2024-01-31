@@ -18,7 +18,7 @@ steps:
       $body = @{
           #AgentMode Cloud or Internal (If there is public access to website cloud can be selected, otherwise it should be Internal)
           "AgentMode" = "Cloud"
-          "RootUrl" = "http://example4.com"
+          "RootUrl" = "http://rest.testinvicti.com/"
           "LicenseType" = "Subscription"
           "Name" = "Blue Fizzz 3333"
           "Description" = "Sample Description"
@@ -66,9 +66,9 @@ steps:
           IsShared = $true
           IsTimeWindowEnabled = $false
           #Add Profile Name
-          #Add Target URI, FQDN should be same as Root URL above, additional path can be added e.g. http://example4.com/test/
-          ProfileName = 'profile_example_4'
-          TargetUri = 'http://example4.com/'
+          #Add Target URI, FQDN should be same as Root URL above, additional path can be added e.g. http://rest.testinvicti.com//test/
+          ProfileName = 'rest test azure'
+          TargetUri = 'http://rest.testinvicti.com//'
           # Example BasicAuthenticationApiModel = @{
               #Credentials = @(
                #   @{
@@ -193,7 +193,7 @@ steps:
             # Fill in the Profile Name same as given above
             # Add the Target URI, same as the target Website above
                 ProfileName = "profile_example_4"
-                TargetUri = "http://example4.com/"
+                TargetUri = "http://rest.testinvicti.com//"
             } | ConvertTo-Json
             
             $jsonResponse = Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body $body -ErrorAction Stop
@@ -303,7 +303,7 @@ steps:
           }
           #Add RootURL 
           #Select minimum severity for email notification
-          WebsiteRootUrl = "http://example4.com/"
+          WebsiteRootUrl = "http://rest.testinvicti.com//"
           EmailSmsFilter = @{
               IsConfirmed = $false
               Severity    = "Critical"
