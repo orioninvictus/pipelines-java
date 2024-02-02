@@ -67,7 +67,7 @@ steps:
           IsTimeWindowEnabled = $false
           #Add Profile Name
           #Add Target URI, FQDN should be same as Root URL above, additional path can be added e.g. http://example.com/test/
-          ProfileName = 'rest test azure'
+          ProfileName = 'Bluefizz CICD Test'
           TargetUri = 'http://www.example.com/'
           # Example BasicAuthenticationApiModel = @{
               #Credentials = @(
