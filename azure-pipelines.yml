@@ -18,7 +18,7 @@ steps:
       $body = @{
           #AgentMode Cloud or Internal (If there is public access to website cloud can be selected, otherwise it should be Internal)
           "AgentMode" = "Cloud"
-          "RootUrl" = "http://example.com/"
+          "RootUrl" = "http://www.example.com/"
           "LicenseType" = "Subscription"
           "Name" = "Blue Fizzz 3333"
           "Description" = "Sample Description"
@@ -68,7 +68,7 @@ steps:
           #Add Profile Name
           #Add Target URI, FQDN should be same as Root URL above, additional path can be added e.g. http://example.com/test/
           ProfileName = 'rest test azure'
-          TargetUri = 'http://example.com/'
+          TargetUri = 'http://www.example.com/'
           # Example BasicAuthenticationApiModel = @{
               #Credentials = @(
                #   @{
@@ -193,7 +193,7 @@ steps:
             # Fill in the Profile Name same as given above
             # Add the Target URI, same as the target Website above
                 ProfileName = "profile_example_4"
-                TargetUri = "http://example.com/"
+                TargetUri = "http://www.example.com/"
             } | ConvertTo-Json
             
             $jsonResponse = Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body $body -ErrorAction Stop
