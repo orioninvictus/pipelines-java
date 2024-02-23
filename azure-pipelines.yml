@@ -50,6 +50,7 @@ steps:
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
+    displayName: Create Target on Invicti
     script: |
       # Sleep for 1 minute
       Start-Sleep -Seconds 10
