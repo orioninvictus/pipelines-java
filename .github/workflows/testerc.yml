@@ -3,6 +3,7 @@ name: Netspaker Enterprise Scan Sample Workflow
 on:
   push:
     branches: [ main ]
+jobs:
 
 netspaker_scan_job:
     runs-on: ubuntu-20.04
