@@ -1,8 +1,8 @@
-name: Netspaker Enterprise Scan Sample Workflow
-
+name: github_actions
 on:
   push:
-    branches: [ main ]
+    branches:
+      - master
 jobs:
 
 netspaker_scan_job:
