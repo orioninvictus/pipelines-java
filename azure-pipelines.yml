@@ -193,7 +193,7 @@ steps:
             $body = @{
             # Fill in the Profile Name same as given above
             # Add the Target URI, same as the target Website above
-                ProfileName = "profile_example_4"
+                ProfileName = "Bluefizz CICD Test"
                 TargetUri = "http://www.example.com/"
             } | ConvertTo-Json
             
