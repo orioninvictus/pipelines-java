@@ -9,7 +9,7 @@ steps:
   name: createTask
   inputs:
     apiUrl: 'https://online.acunetix.com'
-    targetAddress: 'http://example.com/haydaaa'
+    targetAddress: 'http://example.com/haydaaa5'
     criticality: '30'
 
 - task: ConfigureDASTTarget@1
