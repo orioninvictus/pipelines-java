@@ -8,6 +8,7 @@ steps:
 - task: CreateDASTTarget@1
   inputs:
     apiUrl: 'https://online.acunetix.com'
+    apiKey: 'DAST_API_KEY'
     targetAddress: 'http://example.com/final'
     description: 'DAST created from Azure DevOps FINAL'
     criticality: '30'
