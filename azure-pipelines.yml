@@ -8,9 +8,9 @@ steps:
 - task: CreateDASTTarget@1
   inputs:
     apiUrl: 'https://online.acunetix.com'
-    apiKey: '$(DAST_API_KEY)'
-    targetAddress: 'http://example.com/final'
-    description: 'DAST created from Azure DevOps FINAL'
+    apiKey: $(DAST_API_KEY)
+    targetAddress: 'http://example.com/final2'
+    description: 'DAST created from Azure DevOps 2'
     criticality: '30'
 
 - task: ConfigureDASTTarget@1
@@ -22,14 +22,12 @@ steps:
     authenticationEnabled: true
     authUsername: 'test'
     authPassword: 'test'
-    authUrl: 'http://example.com'
+    authUrl: 'http://example.com/final2'
 
 - task: StartDASTScan@1
   inputs:
-    apiUrl: 'https://online.acunetix.com'
     criticalThreshold: '2'
     highThreshold: '2'
     abortScanOnFindings: true
     targetId: 
     scheduleDisable: true
-    triggerable: true
