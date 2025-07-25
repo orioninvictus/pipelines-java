@@ -6,6 +6,7 @@ pool:
 
 steps:
 - task: CreateDASTTarget@1
+  name: createTask
   inputs:
     apiUrl: 'https://online.acunetix.com'
     targetAddress: 'http://example.com/haydaaa'
@@ -14,7 +15,7 @@ steps:
 - task: ConfigureDASTTarget@1
   inputs:
     apiUrl: 'https://online.acunetix.com'
-    targetId: '$(DASTTargetId)'
+    targetId: '$(createTask.DASTTargetId)'
     limitCrawlerScope: true
     scanSpeed: 'fast'
     authenticationEnabled: true
@@ -27,5 +28,5 @@ steps:
     criticalThreshold: '2'
     highThreshold: '2'
     abortScanOnFindings: true
-    targetId: '$(DASTTargetId)'
+    targetId: '$(createTask.DASTTargetId)'
     scheduleDisable: true
