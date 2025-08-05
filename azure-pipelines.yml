@@ -6,10 +6,9 @@ pool:
 
 steps:
 - task: CreateDASTTarget@1
-  name: createTask
   inputs:
     apiUrl: 'https://online.acunetix.com'
-    targetAddress: 'http://example.com/haydaaa5'
+    targetAddress: 'http://rest.testinvicti.com/basic_authentication'
     criticality: '30'
 
 - task: ConfigureDASTTarget@1
@@ -18,15 +17,13 @@ steps:
     targetId: '$(createTask.DASTTargetId)'
     limitCrawlerScope: true
     scanSpeed: 'fast'
-    authenticationEnabled: true
-    authUsername: 'test'
-    authPassword: 'test'
-    authUrl: 'http://example.com'
+    importFilePath: 'import_files/openapi-swagger_basicauthentication.yaml'
+    authenticationEnabled: false
 
 - task: StartDASTScan@1
   inputs:
+    apiUrl: 'https://online.acunetix.com'
     criticalThreshold: '2'
-    highThreshold: '2'
-    abortScanOnFindings: true
+    highThreshold: '0'
     targetId: '$(createTask.DASTTargetId)'
     scheduleDisable: true
