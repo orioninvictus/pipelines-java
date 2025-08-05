@@ -11,7 +11,7 @@ steps:
 - task: CreateDASTTarget@1
   inputs:
     apiUrl: 'https://online.acunetix.com'
-    targetAddress: 'http://example.com/ohyeahletsgoparty2'
+    targetAddress: 'http://example.com/ohyeahletsgoparty3'
     criticality: '30'
 
 - task: ConfigureDASTTarget@1
@@ -21,7 +21,7 @@ steps:
     limitCrawlerScope: true
     scanSpeed: 'fast'
     importFilePath: 'openapi-swagger_basicauthentication.yaml'
-    importFileName: 'azure-imported-file'
+    importFileName: 'azure-imported-file.yaml'
     authenticationEnabled: false
 
 - task: StartDASTScan@1
