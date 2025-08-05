@@ -28,7 +28,7 @@ steps:
     targetId: '$(createTask.DASTTargetId)'
     limitCrawlerScope: true
     scanSpeed: 'fast'
-    importFilePath: 'invictustest/import_files/openapi-swagger_basicauthentication.yaml'
+    importFilePath: 'openapi-swagger_basicauthentication.yaml'
     authenticationEnabled: false
 
 - task: StartDASTScan@1
