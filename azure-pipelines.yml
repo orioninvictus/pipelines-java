@@ -12,7 +12,7 @@ steps:
   name: createTargetStep
   inputs:
     apiUrl: 'https://online.acunetix.com'
-    targetAddress: 'http://example.com/ohyeahletsgoparty4'
+    targetAddress: 'http://example.com/ohyeahletsgoparty5'
     criticality: '30'
 
 - task: ConfigureDASTTarget@1
