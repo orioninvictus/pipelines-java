@@ -5,6 +5,9 @@ pool:
   vmImage: 'windows-latest'
 
 steps:
+
+- checkout: self
+
 - task: CreateDASTTarget@1
   inputs:
     apiUrl: 'https://online.acunetix.com'
