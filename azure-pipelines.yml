@@ -12,7 +12,7 @@ steps:
   name: createTargetStep
   inputs:
     apiUrl: 'https://online.acunetix.com'
-    targetAddress: 'http://example.com/ohyeahletsgoparty6'
+    targetAddress: 'http://rest.testinvicti.com/basic_authentication/api'
     criticality: '30'
 
 - task: ConfigureDASTTarget@1
