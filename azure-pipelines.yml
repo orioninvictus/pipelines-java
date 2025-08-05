@@ -11,7 +11,7 @@ steps:
 - task: CreateDASTTarget@1
   inputs:
     apiUrl: 'https://online.acunetix.com'
-    targetAddress: 'http://rest.testinvicti.com/basic_authentication'
+    targetAddress: 'http://example.com/ohyeahletsgo'
     criticality: '30'
 
 - task: ConfigureDASTTarget@1
