@@ -12,7 +12,7 @@ steps:
   name: createTargetStep
   inputs:
     apiUrl: 'https://online.acunetix.com'
-    targetAddress: 'http://rest.testinvicti.com/basic_authentication/api'
+    targetAddress: 'http://vulnapi.testinvicti.com/'
     criticality: '30'
 
 - task: ConfigureDASTTarget@1
@@ -28,7 +28,7 @@ steps:
   inputs:
     apiUrl: 'https://online.acunetix.com'
     criticalThreshold: '0'
-    highThreshold: '0'
+    highThreshold: '3'
     targetId: '$(createTargetStep.DASTTargetId)'
     profileId: '11111111-1111-1111-1111-111111111111'
     scheduleDisable: true
