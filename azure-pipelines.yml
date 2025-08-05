@@ -11,7 +11,7 @@ steps:
 - task: CreateDASTTarget@1
   inputs:
     apiUrl: 'https://online.acunetix.com'
-    targetAddress: 'http://example.com/ohyeahletsgo'
+    targetAddress: 'http://example.com/ohyeahletsgoparty'
     criticality: '30'
 
 - task: ConfigureDASTTarget@1
@@ -26,8 +26,7 @@ steps:
 - task: StartDASTScan@1
   inputs:
     apiUrl: 'https://online.acunetix.com'
-    criticalThreshold: '2'
+    criticalThreshold: '0'
     highThreshold: '0'
     targetId: '$(createTask.DASTTargetId)'
     scheduleDisable: true
-
