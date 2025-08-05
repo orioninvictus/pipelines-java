@@ -12,7 +12,7 @@ steps:
   name: createTargetStep
   inputs:
     apiUrl: 'https://online.acunetix.com'
-    targetAddress: 'http://example.com/ohyeahletsgoparty5'
+    targetAddress: 'http://example.com/ohyeahletsgoparty6'
     criticality: '30'
 
 - task: ConfigureDASTTarget@1
@@ -30,4 +30,5 @@ steps:
     criticalThreshold: '0'
     highThreshold: '0'
     targetId: '$(createTargetStep.DASTTargetId)'
+    profileId: '11111111-1111-1111-1111-111111111111'
     scheduleDisable: true
