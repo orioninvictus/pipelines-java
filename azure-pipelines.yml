@@ -8,6 +8,14 @@ steps:
 
 - checkout: self
 
+- script: |
+    echo "Current working directory:"
+    echo $(Build.SourcesDirectory)
+    echo "Listing files recursively:"
+    dir "$(Build.SourcesDirectory)" /s
+  displayName: 'Debug: List files in sources directory'
+
+
 - task: CreateDASTTarget@1
   inputs:
     apiUrl: 'https://online.acunetix.com'
@@ -20,7 +28,7 @@ steps:
     targetId: '$(createTask.DASTTargetId)'
     limitCrawlerScope: true
     scanSpeed: 'fast'
-    importFilePath: 'import_files/openapi-swagger_basicauthentication.yaml'
+    importFilePath: 'invictustest/import_files/openapi-swagger_basicauthentication.yaml'
     authenticationEnabled: false
 
 - task: StartDASTScan@1
@@ -30,3 +38,4 @@ steps:
     highThreshold: '0'
     targetId: '$(createTask.DASTTargetId)'
     scheduleDisable: true
+
