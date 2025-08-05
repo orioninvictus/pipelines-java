@@ -8,14 +8,6 @@ steps:
 
 - checkout: self
 
-- script: |
-    echo "Current working directory:"
-    echo $(Build.SourcesDirectory)
-    echo "Listing files recursively:"
-    dir "$(Build.SourcesDirectory)" /s
-  displayName: 'Debug: List files in sources directory'
-
-
 - task: CreateDASTTarget@1
   inputs:
     apiUrl: 'https://online.acunetix.com'
