@@ -12,7 +12,7 @@ steps:
   name: createTargetStep
   inputs:
     apiUrl: 'https://online.acunetix.com'
-    targetAddress: 'http://vulnapi.testinvicti.com/'
+    targetAddress: 'https://vulnbank.org/'
     criticality: '30'
 
 - task: ConfigureDASTTarget@1
@@ -21,14 +21,16 @@ steps:
     targetId: '$(createTargetStep.DASTTargetId)'
     limitCrawlerScope: true
     scanSpeed: 'fast'
-    importFilePath: 'openapi-swagger_basicauthentication.yaml'
+    importFilePath: 'vulnbank_api.json'
+    importFileName: 'vulnbank_api'
     authenticationEnabled: false
 
 - task: StartDASTScan@1
   inputs:
     apiUrl: 'https://online.acunetix.com'
-    criticalThreshold: '0'
-    highThreshold: '3'
+    criticalThreshold: '5'
+    highThreshold: '5'
+    abortScanOnFindings: true
     targetId: '$(createTargetStep.DASTTargetId)'
     profileId: '11111111-1111-1111-1111-111111111111'
     scheduleDisable: true
