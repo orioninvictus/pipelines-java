@@ -7,9 +7,7 @@ pool:
 steps:
 
 - checkout: self
-
-- task: netsparker-cloud@1
+- task: PowerShell@2
   inputs:
-    apiConnection: 'Project Team A DAST Connection'
-    scanTypes: '1'
-    scanWebSites: '7ce8c8ea-cbcc-46bd-2e18-b01a0266716d'
+    targetType: 'inline'
+    script: 'Invoke-RestMethod -uri ''https://www.netsparkercloud.com/api/1.0/scans/CreateFromPluginScanRequest'' -ContentType ''application/json; charset=UTF-8'' -Method POST -Headers @{ Authorization = "Basic $([System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($env:USERID +'':''+$env:APITOKEN)))"} -Body $(@{ WebsiteId=''32bd8bc5-5aa7-430d-3365-afd90226256d''; ScanType=''FullWithPrimaryProfile''; VcsCommitInfoModel = @{CiBuildConfigurationName = $env:SYSTEM_TEAMPROJECT; CiBuildHasChange = $env:BUILD_SOURCEVERSION; CiBuildId = $env:BUILD_BUILDID; CiBuildUrl= $env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI; Committer= $env:BUILD_REQUESTEDFOR; IntegrationSystem = ''AzureDevOps''; VcsName = $env:BUILD_REPOSITORY_PROVIDER; VcsVersion = $env:BUILD_SOURCEVERSION};}| ConvertTo-Json)'
