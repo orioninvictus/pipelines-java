@@ -12,10 +12,4 @@ steps:
   inputs:
     apiConnection: 'Project Team A DAST Connection'
     scanTypes: '1'
-    scanWebSites: '8380702c-ca3f-4213-e6f2-b325022a1cd0'
-    buildFail: true
-    severity: 'Critical,High'
-    hasReport: true
-    reportType: 'ScanDetail'
-    isConfirmed: true
-    ignoreFalsePositive: true
+    scanWebSites: '7ce8c8ea-cbcc-46bd-2e18-b01a0266716d'
