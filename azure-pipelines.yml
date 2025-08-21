@@ -8,29 +8,14 @@ steps:
 
 - checkout: self
 
-- task: CreateDASTTarget@1
-  name: createTargetStep
+- task: netsparker-cloud@1
   inputs:
-    apiUrl: 'https://online.acunetix.com'
-    targetAddress: 'https://vulnbank.org/'
-    criticality: '30'
-
-- task: ConfigureDASTTarget@1
-  inputs:
-    apiUrl: 'https://online.acunetix.com'
-    targetId: '$(createTargetStep.DASTTargetId)'
-    limitCrawlerScope: true
-    scanSpeed: 'fast'
-    importFilePath: 'vulnbank_api.json'
-    importFileName: 'vulnbank_api'
-    authenticationEnabled: false
-
-- task: StartDASTScan@1
-  inputs:
-    apiUrl: 'https://online.acunetix.com'
-    criticalThreshold: '5'
-    highThreshold: '5'
-    abortScanOnFindings: true
-    targetId: '$(createTargetStep.DASTTargetId)'
-    profileId: '11111111-1111-1111-1111-111111111111'
-    scheduleDisable: true
+    apiConnection: 'Project Team A DAST Connection'
+    scanTypes: '1'
+    scanWebSites: '8380702c-ca3f-4213-e6f2-b325022a1cd0'
+    buildFail: true
+    severity: 'Critical,High'
+    hasReport: true
+    reportType: 'ScanDetail'
+    isConfirmed: true
+    ignoreFalsePositive: true
